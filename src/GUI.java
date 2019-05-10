@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class GUI {
 
@@ -26,6 +27,8 @@ public class GUI {
 
         JButton Button1 = new JButton("Aanmelden");
 
+        ActionListener listener = new ClickListener();
+        Button1.addActionListener(listener);
 
         panel.add(Label1);
 
