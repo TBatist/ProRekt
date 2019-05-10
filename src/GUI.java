@@ -2,7 +2,7 @@ import javax.swing.*;
 
 public class GUI {
 
-    public void startProgram(){
+    public void runGui(){
         JFrame Frame = new JFrame();
 
         Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
