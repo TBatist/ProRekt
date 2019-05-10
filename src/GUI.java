@@ -19,6 +19,7 @@ public class GUI {
 
 
 
+
         JPanel panel = new JPanel();
 
         Color background = new Color(Integer.parseInt("ccffcc", 16));
