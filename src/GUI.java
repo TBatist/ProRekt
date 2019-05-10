@@ -13,7 +13,7 @@ public class GUI {
 
         JLabel Label1 = new JLabel("Full House!");
 
-        JLabel Label2 = new JLabel("Klik op 'Log in' als u al heeft account heeft. \n Klik op 'Aanmelden' als u een account wilt maken.");
+        JLabel Label2 = new JLabel("Klik op 'Log in' als u al heeft account heeft. \n Klik op 'Aanmelden' als u een account wilt maken. ");
 
         JButton Button2 = new JButton("Log in");
 
