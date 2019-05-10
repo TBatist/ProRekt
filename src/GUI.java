@@ -9,6 +9,7 @@ public class GUI {
     private static JButton Button1;
     private static JButton Button2;
 
+
     public void runGui(){
         JFrame Frame = new JFrame();
 
