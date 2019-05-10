@@ -26,6 +26,8 @@ public class GUI {
 
         panel.add(Button1);
 
+        panel.add(Button2);
+
         Frame.add(panel);
 
         Frame.setVisible(true);
