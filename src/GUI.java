@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 
 public class GUI {
     private Button lastClicked = new Button();
-    public static JButton Button1;
+    private static JButton Button1;
+    private static JButton Button2;
 
     public void runGui(){
         JFrame Frame = new JFrame();
@@ -28,7 +29,7 @@ public class GUI {
 
         JLabel Label2 = new JLabel("Klik op 'Log in' als u al heeft account heeft.   Klik op 'Aanmelden' als u een account wilt maken. ");
 
-        JButton Button2 = new JButton("Log in");
+        Button2 = new JButton("Log in");
 
         Button1 = new JButton("Aanmelden");
 
@@ -52,7 +53,7 @@ public class GUI {
 
         public void actionPerformed(ActionEvent event) {
             if(event.getSource() == GUI.Button1){
-
+                GUI.Button2.setText("Het werkt");
             }
 
         }
