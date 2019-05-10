@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class GUI {
 
@@ -9,7 +10,13 @@ public class GUI {
         Frame.setTitle("Test");
         Frame.setSize(400,400);
 
+
+
+
+
         JPanel panel = new JPanel();
+
+        panel.setBackground(Color.BLUE);
 
         JLabel Label1 = new JLabel("Full House!");
 
