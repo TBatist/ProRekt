@@ -15,7 +15,8 @@ public class GUI {
         Frame.setTitle("Test");
         Frame.setSize(600,400);
 
-
+        ImageIcon img = new ImageIcon("src\\heart.png");
+        Frame.setIconImage(img.getImage());
 
 
 
@@ -52,7 +53,6 @@ public class GUI {
 
         public void actionPerformed(ActionEvent event) {
             if(event.getSource() == GUI.Button1){
-
             }
 
         }
