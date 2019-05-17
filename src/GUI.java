@@ -16,11 +16,6 @@ public class GUI {
         Frame.setTitle("Test");
         Frame.setSize(600,400);
 
-
-
-
-
-
         JPanel panel = new JPanel();
 
         Color background = new Color(Integer.parseInt("ccffcc", 16));
@@ -37,6 +32,8 @@ public class GUI {
         ActionListener listener = new ClickListener();
         Button1.addActionListener(listener);
 
+        panel.setLayout(new GridLayout(4,1));
+
         panel.add(Label1);
 
         panel.add(Label2);
@@ -46,6 +43,7 @@ public class GUI {
         panel.add(Button2);
 
         Frame.add(panel);
+
 
         Frame.setVisible(true);
     }
@@ -61,5 +59,3 @@ public class GUI {
     }
 
 }
-
-
