@@ -16,11 +16,6 @@ public class GUI {
         Frame.setTitle("Test");
         Frame.setSize(600,400);
 
-
-
-
-
-
         JPanel panel = new JPanel();
 
         Color background = new Color(Integer.parseInt("ccffcc", 16));
@@ -28,7 +23,7 @@ public class GUI {
 
         JLabel Label1 = new JLabel("Full House!");
 
-        JLabel Label2 = new JLabel("Klik op 'Log in' als u al heeft account heeft.   Klik op 'Aanmelden' als u een account wilt maken. ");
+        JLabel Label2 = new JLabel("Klik op 'Log in' als u al een account heeft.   Klik op 'Aanmelden' als u een account wilt maken. ");
 
         JButton Button2 = new JButton("Log in");
 
@@ -36,6 +31,8 @@ public class GUI {
 
         ActionListener listener = new ClickListener();
         Button1.addActionListener(listener);
+
+        panel.setLayout(new GridLayout(4,1));
 
         panel.add(Label1);
 
@@ -46,6 +43,7 @@ public class GUI {
         panel.add(Button2);
 
         Frame.add(panel);
+
 
         Frame.setVisible(true);
     }
@@ -61,5 +59,3 @@ public class GUI {
     }
 
 }
-
-
