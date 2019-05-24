@@ -38,8 +38,9 @@ public class GUI {
         JButton Button2 = new JButton("Log in");
         Button2.setBackground(background2);
         Button2.setFont(font);
+        Button2.setSize(new Dimension(400,30));
 
-        panel.setLayout(new GridLayout(4,1));
+        panel.setLayout(new GridLayout(3,1));
 
         panel.add(Label1);
 
@@ -49,8 +50,8 @@ public class GUI {
 
         Frame.add(panel);
 
-
         Frame.setVisible(true);
+        Frame.pack();
     }
 
 }
