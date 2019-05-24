@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 public class GUI {
     private Button lastClicked = new Button();
-    public static JButton Button1;
 
 
     public void runGui(){
@@ -39,20 +38,11 @@ public class GUI {
         Button2.setBackground(background2);
         Button2.setFont(font);
 
-        Button1 = new JButton("Aanmelden");
-        Button1.setBackground(background2);
-        Button1.setFont(font);
-
-        ActionListener listener = new ClickListener();
-        Button1.addActionListener(listener);
-
         panel.setLayout(new GridLayout(4,1));
 
         panel.add(Label1);
 
         panel.add(Label2);
-
-        panel.add(Button1);
 
         panel.add(Button2);
 
@@ -60,16 +50,6 @@ public class GUI {
 
 
         Frame.setVisible(true);
-    }
-
-    public class ClickListener implements ActionListener {
-
-        public void actionPerformed(ActionEvent event) {
-            if(event.getSource() == GUI.Button1){
-
-            }
-
-        }
     }
 
 }
