@@ -35,11 +35,7 @@ public class GUI {
         JLabel Label2 = new JLabel("Klik op 'Log in' als u al een account heeft.   Klik op 'Aanmelden' als u een account wilt maken. ");
         Label2.setFont(font);
 
-        JButton Button2 = new JButton("Log in");
-        Button2.setBackground(background2);
-        Button2.setFont(font);
-
-        Button1 = new JButton("Aanmelden");
+        JButton Button1 = new JButton("Log in");
         Button1.setBackground(background2);
         Button1.setFont(font);
 
@@ -53,8 +49,6 @@ public class GUI {
         panel.add(Label2);
 
         panel.add(Button1);
-
-        panel.add(Button2);
 
         Frame.add(panel);
 
