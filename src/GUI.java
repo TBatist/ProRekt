@@ -28,6 +28,7 @@ public class GUI {
         JButton Button2 = new JButton("Log in");
 
         Button1 = new JButton("Aanmelden");
+        Button1.setBackground(background);
 
         ActionListener listener = new ClickListener();
         Button1.addActionListener(listener);
