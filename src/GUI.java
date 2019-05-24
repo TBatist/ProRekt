@@ -14,7 +14,7 @@ public class GUI {
 
         Frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Frame.setTitle("Test");
-        Frame.setSize(600,400);
+        Frame.setSize(1000,600);
 
         JPanel panel = new JPanel();
 
@@ -24,18 +24,24 @@ public class GUI {
         Color background4 = new Color(Integer.parseInt("726DA8", 16));
         Color background5 = new Color(Integer.parseInt("594157", 16));
 
+        Font font = new Font("bahnschrift", Font.BOLD, 15);
+
 
         panel.setBackground(background);
 
         JLabel Label1 = new JLabel("Full House!");
+        Label1.setFont(font);
 
         JLabel Label2 = new JLabel("Klik op 'Log in' als u al een account heeft.   Klik op 'Aanmelden' als u een account wilt maken. ");
+        Label2.setFont(font);
 
         JButton Button2 = new JButton("Log in");
         Button2.setBackground(background2);
+        Button2.setFont(font);
 
         Button1 = new JButton("Aanmelden");
         Button1.setBackground(background2);
+        Button1.setFont(font);
 
         ActionListener listener = new ClickListener();
         Button1.addActionListener(listener);
