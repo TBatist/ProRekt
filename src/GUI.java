@@ -18,7 +18,13 @@ public class GUI {
 
         JPanel panel = new JPanel();
 
-        Color background = new Color(Integer.parseInt("ccffcc", 16));
+        Color background = new Color(Integer.parseInt("BEE7E8", 16));
+        Color background2 = new Color(Integer.parseInt("A0D2DB", 16));
+        Color background3 = new Color(Integer.parseInt("7D8CC4", 16));
+        Color background4 = new Color(Integer.parseInt("726DA8", 16));
+        Color background5 = new Color(Integer.parseInt("594157", 16));
+
+
         panel.setBackground(background);
 
         JLabel Label1 = new JLabel("Full House!");
@@ -26,9 +32,10 @@ public class GUI {
         JLabel Label2 = new JLabel("Klik op 'Log in' als u al een account heeft.   Klik op 'Aanmelden' als u een account wilt maken. ");
 
         JButton Button2 = new JButton("Log in");
+        Button2.setBackground(background2);
 
         Button1 = new JButton("Aanmelden");
-        Button1.setBackground(background);
+        Button1.setBackground(background2);
 
         ActionListener listener = new ClickListener();
         Button1.addActionListener(listener);
