@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 public class GUI {
     private Button lastClicked = new Button();
+    public static JButton Button1;
 
 
     public void runGui(){
