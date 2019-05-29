@@ -29,6 +29,23 @@ public class GUI_From {
     private JLabel labelRating;
     private JLabel labelBekspeler;
     private JButton registreerButton;
+    private JTextField textDatum;
+    private JTextField textBtijd;
+    private JTextField textEtijd;
+    private JTextField textBeschrijving;
+    private JTextField textWinnaar;
+    private JTextField textMaxinschrijvingen;
+    private JTextField textInleggeld;
+    private JTextField textInschrijfdatum;
+    private JButton voegToeButton;
+    private JLabel labelDatum;
+    private JLabel labelBtijd;
+    private JLabel labelEtijd;
+    private JLabel labelBeschrijving;
+    private JLabel labelWinnaar;
+    private JLabel labelMaxinschrijvingen;
+    private JLabel labelInleggeld;
+    private JLabel labelInschrijfdatum;
 
     public GUI_From() {
         registreerButton.addActionListener(new ActionListener() {
