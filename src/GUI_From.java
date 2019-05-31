@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 
 public class GUI_From {
     private JTabbedPane tabbedPane;
@@ -29,28 +30,94 @@ public class GUI_From {
     private JLabel labelRating;
     private JLabel labelBekspeler;
     private JButton registreerButton;
-    private JTextField textDatum;
-    private JTextField textBtijd;
-    private JTextField textEtijd;
-    private JTextField textBeschrijving;
-    private JTextField textWinnaar;
-    private JTextField textMaxinschrijvingen;
-    private JTextField textInleggeld;
-    private JTextField textInschrijfdatum;
-    private JButton voegToeButton;
-    private JLabel labelDatum;
-    private JLabel labelBtijd;
-    private JLabel labelEtijd;
-    private JLabel labelBeschrijving;
-    private JLabel labelWinnaar;
-    private JLabel labelMaxinschrijvingen;
-    private JLabel labelInleggeld;
-    private JLabel labelInschrijfdatum;
+    private JTextField textDatumT;
+    private JTextField textBtijdT;
+    private JTextField textEtijdT;
+    private JTextField textBeschrijvingT;
+    private JTextField textWinnaarT;
+    private JTextField textMaxinschrijvingenT;
+    private JTextField textInleggeldT;
+    private JTextField textInschrijfdatumT;
+    private JButton voegToeButtonT;
+    private JLabel labelDatumT;
+    private JLabel labelBtijdT;
+    private JLabel labelEtijdT;
+    private JLabel labelBeschrijvingT;
+    private JLabel labelWinnaarT;
+    private JLabel labelMaxinschrijvingenT;
+    private JLabel labelInleggeldT;
+    private JLabel labelInschrijfdatumT;
+    private JTextField textDatumMC;
+    private JTextField textBeginMC;
+    private JTextField textEindMC;
+    private JTextField textPrijsMC;
+    private JTextField textMinratingMC;
+    private JButton voegToeButtonMC;
+    private JLabel labelDatumMC;
+    private JLabel labelBeginMC;
+    private JLabel labelEindMC;
+    private JLabel labelPrijsMC;
+    private JLabel labelMinratingMC;
 
     public GUI_From() {
         registreerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String name = textNaam.getText();
+                String adres = textAdres.getText();
+                String postcode = textPostcode.getText();
+                String woonplaats = textWoonplaats.getText();
+                long telnr = Long.parseLong(textTelnr.getText());
+                String email = textEmail.getText();
+                Date gebdatum = Date.valueOf(textGebdatum.getText());
+                char geslacht;
+                if(manRadioButton.isSelected()){
+                    geslacht = 'M';
+                }else if(vrouwRadioButton.isSelected()){
+                    geslacht = 'V';
+                }else if(andersRadioButton.isSelected()){
+                    geslacht = 'A';
+                }
+                int rating = Integer.parseInt(textRating.getText());
+                char bekSpeler;
+                if(jaRadioButton.isSelected()){
+                    bekSpeler = 'J';
+                }else if(neeRadioButton.isSelected()){
+                    bekSpeler = 'N';
+                }
+
+                //TODO Voeg insert van de database toe met bovenstaande variabelen.
+
+            }
+        });
+
+        voegToeButtonT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date datum = Date.valueOf(textDatumT.getText());
+                String beginTijd = textBtijdT.getText();
+                String eindTijd = textEtijdT.getText();
+                String beschrijving = textBeschrijvingT.getText();
+                String winnaar = textWinnaarT.getText();
+                int maxInschrijvingen = Integer.parseInt(textMaxinschrijvingenT.getText());
+                int inleggeld = Integer.parseInt(textInleggeldT.getText());
+                Date inschrijfdatum = Date.valueOf(textInschrijfdatumT.getText());
+
+                //TODO Voeg insert van de database toe met bovenstaande variabelen.
+
+            }
+        });
+
+        voegToeButtonMC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date datum = Date.valueOf(textDatumMC.getText());
+                String beginTijd = textBeginMC.getText();
+                String eindTijd = textEindMC.getText();
+                int prijs = Integer.parseInt(textPrijsMC.getText());
+                int minRating = Integer.parseInt(textMinratingMC.getText());
+
+                //TODO Voeg insert van de database toe met bovenstaande variabelen.
 
             }
         });
