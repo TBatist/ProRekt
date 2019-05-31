@@ -87,6 +87,13 @@ public class GUI_From {
                 }
 
                 //TODO Voeg insert van de database toe met bovenstaande variabelen.
+                // PreparedStatement s = ConnectionManager.getConnection().prepareStatement("INSERT INTO Person VALUES (?, ?, ?)"); Dit kan je evt gebruiken
+                //s.setInt(1, .getId());
+                //            s.setString(2, //todo());
+                //            s.setInt(3, //todo());
+                //            s.execute();
+                //            model.addElement(//todo);
+                // zie voor uitleg java-bestand van docent op BB
 
             }
         });
