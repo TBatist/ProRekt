@@ -4,8 +4,9 @@ import java.awt.event.ActionListener;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 
-public class GUI_From {
+public class GUI_Form {
     private JTabbedPane tabbedPane;
     private JPanel panel;
     private JTextField textNaam;
@@ -34,7 +35,6 @@ public class GUI_From {
     private JTextField textBtijdT;
     private JTextField textEtijdT;
     private JTextField textBeschrijvingT;
-    private JTextField textWinnaarT;
     private JTextField textMaxinschrijvingenT;
     private JTextField textInleggeldT;
     private JTextField textInschrijfdatumT;
@@ -43,7 +43,6 @@ public class GUI_From {
     private JLabel labelBtijdT;
     private JLabel labelEtijdT;
     private JLabel labelBeschrijvingT;
-    private JLabel labelWinnaarT;
     private JLabel labelMaxinschrijvingenT;
     private JLabel labelInleggeldT;
     private JLabel labelInschrijfdatumT;
@@ -58,11 +57,16 @@ public class GUI_From {
     private JLabel labelEindMC;
     private JLabel labelPrijsMC;
     private JLabel labelMinratingMC;
+    private JTextField textResultG;
+    private JTextField textResultT;
+    private JTextField textResultMC;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
+    private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum) VALUES(?,?,?,?,?,?,?)";
+    private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating) VALUES (?,?,?,?,?)";
 
-    public GUI_From() {
+    public GUI_Form() {
         registreerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -70,7 +74,7 @@ public class GUI_From {
                 String adres = textAdres.getText();
                 String postcode = textPostcode.getText();
                 String woonplaats = textWoonplaats.getText();
-                long telnr = Long.parseLong(textTelnr.getText());
+                String telnr = textTelnr.getText();
                 String email = textEmail.getText();
                 Date gebdatum = Date.valueOf(textGebdatum.getText());
                 String geslacht = "";
@@ -94,7 +98,7 @@ public class GUI_From {
                     ps.setString(2, adres);
                     ps.setString(3,postcode);
                     ps.setString(4, woonplaats);
-                    ps.setLong(5, telnr);
+                    ps.setString(5, telnr);
                     ps.setString(6, email);
                     ps.setDate(7, gebdatum);
                     ps.setString(8, geslacht);
@@ -102,17 +106,31 @@ public class GUI_From {
 
                     ps.executeUpdate();
 
+                    textNaam.setText("");
+                    textAdres.setText("");
+                    textPostcode.setText("");
+                    textWoonplaats.setText("");
+                    textTelnr.setText("");
+                    textEmail.setText("");
+                    textGebdatum.setText("");
+                    if(manRadioButton.isSelected()){
+                        manRadioButton.setSelected(false);
+                    }else if(vrouwRadioButton.isSelected()){
+                        vrouwRadioButton.setSelected(false);
+                    }else if(andersRadioButton.isSelected()){
+                        andersRadioButton.setSelected(false);
+                    }
+                    if(jaRadioButton.isSelected()){
+                        jaRadioButton.setSelected(false);
+                    }else if(neeRadioButton.isSelected()){
+                        neeRadioButton.setSelected(false);
+                    }
+
+                    textResultG.setText(naam + " is toegevoegd aan de database.");
+
                 }catch(SQLException exception){
                     exception.printStackTrace();
                 }
-                //TODO Voeg insert van de database toe met bovenstaande variabelen.
-                // PreparedStatement s = ConnectionManager.getConnection().prepareStatement("INSERT INTO Person VALUES (?, ?, ?)"); Dit kan je evt gebruiken
-                //s.setInt(1, .getId());
-                //            s.setString(2, //todo());
-                //            s.setInt(3, //todo());
-                //            s.execute();
-                //            model.addElement(//todo);
-                // zie voor uitleg java-bestand van docent op BB
 
             }
         });
@@ -121,15 +139,38 @@ public class GUI_From {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Date datum = Date.valueOf(textDatumT.getText());
-                String beginTijd = textBtijdT.getText();
-                String eindTijd = textEtijdT.getText();
+                Time beginTijd = Time.valueOf(textBtijdT.getText());
+                Time eindTijd = Time.valueOf(textEtijdT.getText());
                 String beschrijving = textBeschrijvingT.getText();
-                String winnaar = textWinnaarT.getText();
                 int maxInschrijvingen = Integer.parseInt(textMaxinschrijvingenT.getText());
-                int inleggeld = Integer.parseInt(textInleggeldT.getText());
+                double inleggeld = Double.parseDouble(textInleggeldT.getText());
                 Date inschrijfdatum = Date.valueOf(textInschrijfdatumT.getText());
 
-                //TODO Voeg insert van de database toe met bovenstaande variabelen.
+                try{
+                    ps = ConnectionManager.getConnection().prepareStatement(insertToernooi);
+                    ps.setDate(1, datum);
+                    ps.setTime(2, beginTijd);
+                    ps.setTime(3, eindTijd);
+                    ps.setString(4, beschrijving);
+                    ps.setInt(5, maxInschrijvingen);
+                    ps.setDouble(6, inleggeld);
+                    ps.setDate(7, inschrijfdatum);
+
+                    ps.executeUpdate();
+
+                    textDatumT.setText("");
+                    textBtijdT.setText("");
+                    textEtijdT.setText("");
+                    textBeschrijvingT.setText("");
+                    textMaxinschrijvingenT.setText("");
+                    textInleggeldT.setText("");
+                    textInschrijfdatumT.setText("");
+
+                    textResultT.setText("Het toernooi op " + datum + " is toegevoegd aan de database.");
+
+                } catch(SQLException exception){
+                    exception.printStackTrace();
+                }
 
             }
         });
@@ -138,12 +179,32 @@ public class GUI_From {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Date datum = Date.valueOf(textDatumMC.getText());
-                String beginTijd = textBeginMC.getText();
-                String eindTijd = textEindMC.getText();
-                int prijs = Integer.parseInt(textPrijsMC.getText());
+                Time beginTijd = Time.valueOf(textBeginMC.getText());
+                Time eindTijd = Time.valueOf(textEindMC.getText());
+                double prijs = Double.parseDouble(textPrijsMC.getText());
                 int minRating = Integer.parseInt(textMinratingMC.getText());
 
-                //TODO Voeg insert van de database toe met bovenstaande variabelen.
+                try{
+                    ps = ConnectionManager.getConnection().prepareStatement(insertMC);
+                    ps.setDate(1, datum);
+                    ps.setTime(2, beginTijd);
+                    ps.setTime(3, eindTijd);
+                    ps.setDouble(4, prijs);
+                    ps.setInt(5, minRating);
+
+                    ps.executeUpdate();
+
+                    textDatumMC.setText("");
+                    textBeginMC.setText("");
+                    textEindMC.setText("");
+                    textPrijsMC.setText("");
+                    textMinratingMC.setText("");
+
+                    textResultMC.setText("De masterclass op " + datum + " is toegevoegd aan de database.");
+
+                } catch(SQLException exception){
+                    exception.printStackTrace();
+                }
 
             }
         });
@@ -151,7 +212,7 @@ public class GUI_From {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Full House");
-        frame.setContentPane(new GUI_From().panel);
+        frame.setContentPane(new GUI_Form().panel);
         frame.setSize(700,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
