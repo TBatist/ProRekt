@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class GUI_From {
     private JTabbedPane tabbedPane;
@@ -16,7 +18,6 @@ public class GUI_From {
     private JRadioButton manRadioButton;
     private JRadioButton vrouwRadioButton;
     private JRadioButton andersRadioButton;
-    private JTextField textRating;
     private JRadioButton jaRadioButton;
     private JRadioButton neeRadioButton;
     private JLabel labelNaam;
@@ -27,7 +28,6 @@ public class GUI_From {
     private JLabel labelEmail;
     private JLabel labelGebdatum;
     private JLabel labelGeslacht;
-    private JLabel labelRating;
     private JLabel labelBekspeler;
     private JButton registreerButton;
     private JTextField textDatumT;
@@ -59,33 +59,52 @@ public class GUI_From {
     private JLabel labelPrijsMC;
     private JLabel labelMinratingMC;
 
+    private PreparedStatement ps;
+    private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
+
     public GUI_From() {
         registreerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String name = textNaam.getText();
+                String naam = textNaam.getText();
                 String adres = textAdres.getText();
                 String postcode = textPostcode.getText();
                 String woonplaats = textWoonplaats.getText();
                 long telnr = Long.parseLong(textTelnr.getText());
                 String email = textEmail.getText();
                 Date gebdatum = Date.valueOf(textGebdatum.getText());
-                char geslacht;
+                String geslacht = "";
                 if(manRadioButton.isSelected()){
-                    geslacht = 'M';
+                    geslacht = "M";
                 }else if(vrouwRadioButton.isSelected()){
-                    geslacht = 'V';
+                    geslacht = "V";
                 }else if(andersRadioButton.isSelected()){
-                    geslacht = 'A';
+                    geslacht = "A";
                 }
-                int rating = Integer.parseInt(textRating.getText());
-                char bekSpeler;
+                String bekSpeler = "";
                 if(jaRadioButton.isSelected()){
-                    bekSpeler = 'J';
+                    bekSpeler = "J";
                 }else if(neeRadioButton.isSelected()){
-                    bekSpeler = 'N';
+                    bekSpeler = "N";
                 }
 
+                try{
+                    ps = ConnectionManager.getConnection().prepareStatement(insertGast);
+                    ps.setString(1, naam);
+                    ps.setString(2, adres);
+                    ps.setString(3,postcode);
+                    ps.setString(4, woonplaats);
+                    ps.setLong(5, telnr);
+                    ps.setString(6, email);
+                    ps.setDate(7, gebdatum);
+                    ps.setString(8, geslacht);
+                    ps.setString(9, bekSpeler);
+
+                    ps.executeUpdate();
+
+                }catch(SQLException exception){
+                    exception.printStackTrace();
+                }
                 //TODO Voeg insert van de database toe met bovenstaande variabelen.
                 // PreparedStatement s = ConnectionManager.getConnection().prepareStatement("INSERT INTO Person VALUES (?, ?, ?)"); Dit kan je evt gebruiken
                 //s.setInt(1, .getId());
