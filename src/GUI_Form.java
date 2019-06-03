@@ -75,6 +75,18 @@ public class GUI_Form {
     private JList listToernooiInleg;
     private JList listToernooiInsDatum;
     private JTextField textZoekG;
+    private JButton buttonZoekG;
+    private JList listGastId;
+    private JList listGastNaam;
+    private JList listGastAdres;
+    private JList listGastPostcode;
+    private JList listGastWoonplaats;
+    private JList listGastTelnr;
+    private JList listGastEmail;
+    private JList listGastGebdatum;
+    private JList listGastGeslacht;
+    private JList listGastRating;
+    private JList listGastBekspeler;
     private JButton zoekButton;
     private JTextField textFieldZoekOpDatumMc;
     private JList listMasterclassId;
@@ -288,6 +300,31 @@ public class GUI_Form {
                     exception.printStackTrace();
                 }
 
+            }
+        });
+        buttonZoekG.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                try{
+                    String zoekNaam = textZoekG.getText();
+                    ps = ConnectionManager.getConnection().prepareStatement("SELECT * FROM gast WHERE naam like '%" + zoekNaam + "%';");
+                    ResultSet rs = ps.executeQuery();
+
+                    DefaultListModel modelId = new DefaultListModel();
+
+                    listGastId.setModel(modelId);
+
+                    while(rs.next()){
+                        String id = rs.getString("idgast");
+
+                        modelId.addElement(id);
+                    }
+
+                } catch (SQLException exception){
+                    exception.printStackTrace();
+                }
             }
         });
 
