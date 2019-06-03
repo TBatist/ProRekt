@@ -64,6 +64,14 @@ public class GUI_Form {
     private JButton buttonZoekT;
     private JButton buttonZoekAllesT;
     private JList listToernooi;
+    private JList list1;
+    private JList list2;
+    private JList list3;
+    private JList list4;
+    private JList list5;
+    private JList list6;
+    private JList list7;
+    private JList list8;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
