@@ -72,6 +72,8 @@ public class GUI_Form {
     private JList listToernooiMaxInschrijvingen;
     private JList listToernooiInleg;
     private JList listToernooiInsDatum;
+    private JTextField textZoekG;
+    private JButton zoekButton;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
