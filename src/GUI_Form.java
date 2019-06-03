@@ -1,3 +1,5 @@
+import jdk.nashorn.internal.scripts.JO;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.plaf.nimbus.State;
@@ -494,36 +496,69 @@ public class GUI_Form {
                 }
             }
         });
+
         wijzigGastButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int idIndex = Integer.parseInt((String) listGastId.getSelectedValue());
-                JOptionPane dialogWijzigGast = new JOptionPane();
-                dialogWijzigGast.setLayout(new GridLayout(1,11));
+                JPanel optionPanel = new JPanel();
+                optionPanel.setLayout(new GridLayout(1,12));
                 try{
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM gast WHERE idgast = " + idIndex + ";");
-                    JTextField id = new JTextField(rs.getString("idgast"));
-                    JTextField naam = new JTextField(rs.getString("naam"));
-                    JTextField adres = new JTextField(rs.getString("adres"));
-                    JTextField postcode = new JTextField(rs.getString("postcode"));
-                    JTextField woonplaats = new JTextField(rs.getString("woonplaats"));
-                    JTextField telnr = new JTextField(rs.getString("telnr"));
-                    JTextField email = new JTextField(rs.getString("email"));
-                    JTextField gebdatum = new JTextField(rs.getString("gebdatum"));
-                    JTextField geslacht = new JTextField(rs.getString("geslacht"));
-                    JTextField rating = new JTextField(rs.getString("rating"));
-                    JTextField bekspeler = new JTextField(rs.getString("bekspeler"));
 
+                    if(rs.next()) {
+                        JTextField id = new JTextField(rs.getString("idgast"));
+                        int tempId = Integer.parseInt(id.getText());
+                        JTextField naam = new JTextField(rs.getString("naam"));
+                        JTextField adres = new JTextField(rs.getString("adres"));
+                        JTextField postcode = new JTextField(rs.getString("postcode"));
+                        JTextField woonplaats = new JTextField(rs.getString("woonplaats"));
+                        JTextField telnr = new JTextField(rs.getString("telnr"));
+                        JTextField email = new JTextField(rs.getString("email"));
+                        JTextField gebdatum = new JTextField(rs.getString("gebdatum"));
+                        JTextField geslacht = new JTextField(rs.getString("geslacht"));
+                        JTextField rating = new JTextField(rs.getString("rating"));
+                        JTextField bekspeler = new JTextField(rs.getString("bekspeler"));
+
+                        optionPanel.add(id);
+                        optionPanel.add(naam);
+                        optionPanel.add(adres);
+                        optionPanel.add(postcode);
+                        optionPanel.add(woonplaats);
+                        optionPanel.add(telnr);
+                        optionPanel.add(email);
+                        optionPanel.add(gebdatum);
+                        optionPanel.add(geslacht);
+                        optionPanel.add(rating);
+                        optionPanel.add(bekspeler);
+
+                        int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+                        if (result == JOptionPane.OK_OPTION) {
+                            try {
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET idgast = ?, naam = ?, adres = ?, postcode = ?, woonplaats = ?, telnr = ?, email = ?, gebdatum = ?, geslacht = ?, rating = ?, bekspeler = ? WHERE idgast = " + tempId + ";");
+                                ps.setInt(1, Integer.parseInt(id.getText()));
+                                ps.setString(2, naam.getText());
+                                ps.setString(3,adres.getText());
+                                ps.setString(4, postcode.getText());
+                                ps.setString(5, woonplaats.getText());
+                                ps.setString(6, telnr.getText());
+                                ps.setString(7, email.getText());
+                                ps.setDate(8, Date.valueOf(gebdatum.getText()));
+                                ps.setString(9,geslacht.getText());
+                                ps.setInt(10, Integer.parseInt(rating.getText()));
+                                ps.setString(11, bekspeler.getText());
+                                ps.executeUpdate();
+                            } catch (SQLException exception) {
+                                exception.printStackTrace();
+                            }
+                        }
+                    }
                 } catch (SQLException exception){
                     exception.printStackTrace();
                 }
-
-
-
-
-
             }
         });
     }
