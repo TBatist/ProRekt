@@ -98,11 +98,16 @@ public class GUI_Form {
     private JList listMasterclassIdGast;
     private JButton buttonZoekMc;
     private JButton buttonLaatAllesZienMc;
+    private JTextField txtGastID;
+    private JTextField txtMCID;
+    private JButton masterclassRegist;
+    private JCheckBox betaaldCheckBox;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
     private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum) VALUES(?,?,?,?,?,?,?)";
     private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating) VALUES (?,?,?,?,?)";
+    private String insertMcInschrijving = "INSERT INTO InschrijvingMasterclass (idGast, idmc, betaald) VALUES (?,?,?)";
 
     public GUI_Form() {
         registreerButton.addActionListener(new ActionListener() {
@@ -317,6 +322,35 @@ public class GUI_Form {
 
             }
         });
+
+        masterclassRegist.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int gastID = Integer.parseInt(txtGastID.getText());
+                    int MCID = Integer.parseInt(txtMCID.getText());
+                    String betaald;
+                    if (betaaldCheckBox.isSelected()){
+                        betaald = "J";
+                    } else{
+                        betaald = "N";
+                    }
+                    ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
+                    ps.setInt(1, gastID);
+                    ps.setInt(2, MCID);
+                    ps.setString(3, betaald);
+                    ps.executeUpdate();
+
+                    txtGastID.setText("");
+                    txtMCID.setText("");
+                    betaaldCheckBox.setSelected(false);
+                }
+                catch (SQLException ex){
+                    ex.printStackTrace();
+                }
+            }
+        });
+
         buttonZoekG.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
