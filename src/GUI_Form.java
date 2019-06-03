@@ -308,6 +308,24 @@ public class GUI_Form {
                 listMasterclassPrijs.setModel(modelPMc);
                 listMasterclassMinRating.setModel(modelMrMc);
                 listMasterclassIdGast.setModel(modelIdGMc);
+
+                try {
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT * FROM Masterclass");
+
+                    while(rs.next()){
+                        String Masterclass = rs.getString("idMasterclass");
+                        String datum = rs.getString("datum");
+                        modelIdMc.addElement(Masterclass);
+                        modelDMc.addElement(datum);
+                    }
+
+
+
+                } catch(SQLException exception){
+                    exception.printStackTrace();
+                }
             }
         });
     }
