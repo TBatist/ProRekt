@@ -63,15 +63,15 @@ public class GUI_Form {
     private JTextField textZoekT;
     private JButton buttonZoekT;
     private JButton buttonZoekAllesT;
-    private JList listToernooi;
-    private JList list1;
-    private JList list2;
-    private JList list3;
-    private JList list4;
-    private JList list5;
-    private JList list6;
-    private JList list7;
-    private JList list8;
+    private JList listToernooiId;
+    private JList listToernooiDatum;
+    private JList listToernooiBeginTijd;
+    private JList listToernooiEindTijd;
+    private JList listToernooiBeschrijving;
+    private JList listToernooiWinnaar;
+    private JList listToernooiMaxInschrijvingen;
+    private JList listToernooiInleg;
+    private JList listToernooiInsDatum;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -229,8 +229,24 @@ public class GUI_Form {
         buttonZoekAllesT.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
-                DefaultListModel model = new DefaultListModel();
-                listToernooi.setModel(model);
+                DefaultListModel modelId = new DefaultListModel();
+                DefaultListModel modelD = new DefaultListModel();
+                DefaultListModel modelBT = new DefaultListModel();
+                DefaultListModel modelET = new DefaultListModel();
+                DefaultListModel modelB = new DefaultListModel();
+                DefaultListModel modelW = new DefaultListModel();
+                DefaultListModel modelMI = new DefaultListModel();
+                DefaultListModel modelIn = new DefaultListModel();
+                DefaultListModel modelID = new DefaultListModel();
+                listToernooiId.setModel(modelId);
+                listToernooiDatum.setModel(modelD);
+                listToernooiBeginTijd.setModel(modelBT);
+                listToernooiEindTijd.setModel(modelET);
+                listToernooiBeschrijving.setModel(modelB);
+                listToernooiWinnaar.setModel(modelW);
+                listToernooiMaxInschrijvingen.setModel(modelMI);
+                listToernooiInleg.setModel(modelIn);
+                listToernooiInsDatum.setModel(modelID);
                 try {
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
@@ -239,8 +255,8 @@ public class GUI_Form {
                     while(rs.next()){
                         String Toernooi = rs.getString("idToernooi");
                         String datum = rs.getString("datum");
-                        model.addElement(Toernooi);
-                        model.addElement(datum);
+                        modelId.addElement(Toernooi);
+                        modelD.addElement(datum);
                     }
 
 

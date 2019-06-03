@@ -372,7 +372,7 @@
                   <text value="Zoek op datum"/>
                 </properties>
               </component>
-              <component id="7a3f7" class="javax.swing.JList" binding="listToernooi">
+              <component id="7a3f7" class="javax.swing.JList" binding="listToernooiId">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="30" height="50"/>
@@ -380,7 +380,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="77278" class="javax.swing.JList" binding="list4" default-binding="true">
+              <component id="77278" class="javax.swing.JList" binding="listToernooiDatum">
                 <constraints>
                   <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="30" height="50"/>
@@ -388,7 +388,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="3e587" class="javax.swing.JList" binding="list5" default-binding="true">
+              <component id="3e587" class="javax.swing.JList" binding="listToernooiBeginTijd">
                 <constraints>
                   <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="30" height="50"/>
@@ -396,7 +396,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="b340d" class="javax.swing.JList" binding="list6" default-binding="true">
+              <component id="b340d" class="javax.swing.JList" binding="listToernooiEindTijd">
                 <constraints>
                   <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="30" height="50"/>
@@ -404,7 +404,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="dda2c" class="javax.swing.JList" binding="list1" default-binding="true">
+              <component id="dda2c" class="javax.swing.JList" binding="listToernooiBeschrijving">
                 <constraints>
                   <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="30" height="50"/>
@@ -414,7 +414,7 @@
                   <model/>
                 </properties>
               </component>
-              <component id="ed36e" class="javax.swing.JList" binding="list2" default-binding="true">
+              <component id="ed36e" class="javax.swing.JList" binding="listToernooiWinnaar">
                 <constraints>
                   <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="50" height="50"/>
@@ -424,7 +424,7 @@
                   <model/>
                 </properties>
               </component>
-              <component id="9512a" class="javax.swing.JList" binding="list3" default-binding="true">
+              <component id="9512a" class="javax.swing.JList" binding="listToernooiMaxInschrijvingen">
                 <constraints>
                   <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="50" height="50"/>
@@ -432,7 +432,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="1844d" class="javax.swing.JList" binding="list8" default-binding="true">
+              <component id="1844d" class="javax.swing.JList" binding="listToernooiInleg">
                 <constraints>
                   <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="50" height="50"/>
@@ -440,7 +440,7 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="7ca6b" class="javax.swing.JList" binding="list7" default-binding="true">
+              <component id="7ca6b" class="javax.swing.JList" binding="listToernooiInsDatum">
                 <constraints>
                   <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="50"/>
