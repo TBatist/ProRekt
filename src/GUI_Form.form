@@ -765,6 +765,14 @@
                   <text value="Bekende speler"/>
                 </properties>
               </component>
+              <component id="52b8f" class="javax.swing.JButton" binding="wijzigGastButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Wijzig gast"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="bfeab" layout-manager="GridLayoutManager" row-count="7" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">

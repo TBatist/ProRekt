@@ -108,6 +108,7 @@ public class GUI_Form {
     private JButton registrerenToernooiButton;
     private JTextField statusTextField;
     private JTextField statusMasterclassTextField;
+    private JButton wijzigGastButton;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -477,7 +478,7 @@ public class GUI_Form {
                 try {
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM Masterclass");
+                    ResultSet rs = st.executeQuery("SELECT * FROM masterclass");
 
                     while(rs.next()){
                         String Masterclass = rs.getString("idMasterclass");
@@ -491,6 +492,38 @@ public class GUI_Form {
                 } catch(SQLException exception){
                     exception.printStackTrace();
                 }
+            }
+        });
+        wijzigGastButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idIndex = Integer.parseInt((String) listGastId.getSelectedValue());
+                JOptionPane dialogWijzigGast = new JOptionPane();
+                dialogWijzigGast.setLayout(new GridLayout(1,11));
+                try{
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT * FROM gast WHERE idgast = " + idIndex + ";");
+                    JTextField id = new JTextField(rs.getString("idgast"));
+                    JTextField naam = new JTextField(rs.getString("naam"));
+                    JTextField adres = new JTextField(rs.getString("adres"));
+                    JTextField postcode = new JTextField(rs.getString("postcode"));
+                    JTextField woonplaats = new JTextField(rs.getString("woonplaats"));
+                    JTextField telnr = new JTextField(rs.getString("telnr"));
+                    JTextField email = new JTextField(rs.getString("email"));
+                    JTextField gebdatum = new JTextField(rs.getString("gebdatum"));
+                    JTextField geslacht = new JTextField(rs.getString("geslacht"));
+                    JTextField rating = new JTextField(rs.getString("rating"));
+                    JTextField bekspeler = new JTextField(rs.getString("bekspeler"));
+
+                } catch (SQLException exception){
+                    exception.printStackTrace();
+                }
+
+
+
+
+
             }
         });
     }
