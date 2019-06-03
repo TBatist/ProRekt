@@ -102,12 +102,19 @@ public class GUI_Form {
     private JTextField txtMCID;
     private JButton masterclassRegist;
     private JCheckBox betaaldCheckBox;
+    private JTextField txtToernooiID;
+    private JTextField txtIdGast;
+    private JCheckBox betaaldToernooiCheckBox;
+    private JButton registrerenToernooiButton;
+    private JTextField statusTextField;
+    private JTextField statusMasterclassTextField;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
     private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum) VALUES(?,?,?,?,?,?,?)";
     private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating) VALUES (?,?,?,?,?)";
     private String insertMcInschrijving = "INSERT INTO InschrijvingMasterclass (idGast, idmc, betaald) VALUES (?,?,?)";
+    private String insertToernooiInschrijving = "INSERT INTO inschrijvingtoernooi (idGast, idToernooi, betaald) VALUES (?,?,?)";
 
     public GUI_Form() {
         registreerButton.addActionListener(new ActionListener() {
@@ -323,6 +330,36 @@ public class GUI_Form {
             }
         });
 
+        registrerenToernooiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try{
+                    int GastID = Integer.parseInt(txtIdGast.getText());
+                    int toernooiID = Integer.parseInt(txtToernooiID.getText());
+                    String betaald;
+                    if (betaaldToernooiCheckBox.isSelected()){
+                        betaald = "J";
+                    } else {
+                        betaald = "N";
+                    }
+                    ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
+                    ps.setInt(1,GastID);
+                    ps.setInt(2, toernooiID);
+                    ps.setString(3,betaald);
+                    ps.executeUpdate();
+
+                    txtIdGast.setText("");
+                    txtToernooiID.setText("");
+                    betaaldToernooiCheckBox.setSelected(false);
+                    statusTextField.setText("Inschrijving gelukt!");
+
+                } catch (SQLException exc) {
+                    statusTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn.");
+                    exc.printStackTrace();
+
+                }
+            }
+        });
         masterclassRegist.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -344,8 +381,10 @@ public class GUI_Form {
                     txtGastID.setText("");
                     txtMCID.setText("");
                     betaaldCheckBox.setSelected(false);
+                    statusMasterclassTextField.setText("Inschrijving gelukt!");
                 }
                 catch (SQLException ex){
+                    statusMasterclassTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn..");
                     ex.printStackTrace();
                 }
             }
