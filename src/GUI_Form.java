@@ -1,10 +1,10 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.plaf.nimbus.State;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Time;
+import java.sql.*;
 
 public class GUI_Form {
     private JTabbedPane tabbedPane;
@@ -60,6 +60,10 @@ public class GUI_Form {
     private JTextField textResultG;
     private JTextField textResultT;
     private JTextField textResultMC;
+    private JTextField textZoekT;
+    private JButton buttonZoekT;
+    private JButton buttonZoekAllesT;
+    private JList listToernooi;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -208,6 +212,37 @@ public class GUI_Form {
 
             }
         });
+        buttonZoekT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+        buttonZoekAllesT.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e){
+                DefaultListModel model = new DefaultListModel();
+                listToernooi.setModel(model);
+                try {
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT * FROM toernooi");
+
+                    while(rs.next()){
+                        String Toernooi = rs.getString("idToernooi");
+                        String datum = rs.getString("datum");
+                        model.addElement(Toernooi);
+                        model.addElement(datum);
+                    }
+
+
+
+                } catch(SQLException exception){
+                    exception.printStackTrace();
+                }
+
+            }
+        });
     }
 
     public static void main(String[] args) {
@@ -216,5 +251,6 @@ public class GUI_Form {
         frame.setSize(700,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.pack();
     }
 }
