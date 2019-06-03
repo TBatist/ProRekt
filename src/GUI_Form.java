@@ -290,8 +290,23 @@ public class GUI_Form {
                     while(rs.next()){
                         String Toernooi = rs.getString("idToernooi");
                         String datum = rs.getString("datum");
+                        String begintijd = rs.getString("begintijd");
+                        String eindtijd = rs.getString("eindtijd");
+                        String beschrijving = rs.getString("beschrijving");
+                        String winnaar = rs.getString("winnaar");
+                        String maxinschrijvingen = rs.getString("maxInschrijvingen");
+                        String inleg = rs.getString("inleg");
+                        String insdatum = rs.getString("insDatum");
+
                         modelId.addElement(Toernooi);
                         modelD.addElement(datum);
+                        modelBT.addElement(begintijd);
+                        modelET.addElement(eindtijd);
+                        modelB.addElement(beschrijving);
+                        modelW.addElement(winnaar);
+                        modelMI.addElement(maxinschrijvingen);
+                        modelIn.addElement(inleg);
+                        modelID.addElement(insdatum);
                     }
 
 
@@ -305,21 +320,61 @@ public class GUI_Form {
         buttonZoekG.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
-
                 try{
                     String zoekNaam = textZoekG.getText();
                     ps = ConnectionManager.getConnection().prepareStatement("SELECT * FROM gast WHERE naam like '%" + zoekNaam + "%';");
                     ResultSet rs = ps.executeQuery();
 
                     DefaultListModel modelId = new DefaultListModel();
+                    DefaultListModel modelNaam = new DefaultListModel();
+                    DefaultListModel modelAdres = new DefaultListModel();
+                    DefaultListModel modelPostode = new DefaultListModel();
+                    DefaultListModel modelWoonplaats = new DefaultListModel();
+                    DefaultListModel modelTelnr = new DefaultListModel();
+                    DefaultListModel modelEmail = new DefaultListModel();
+                    DefaultListModel modelGebdatum = new DefaultListModel();
+                    DefaultListModel modelGeslacht = new DefaultListModel();
+                    DefaultListModel modelRating = new DefaultListModel();
+                    DefaultListModel modelBekspeler = new DefaultListModel();
 
                     listGastId.setModel(modelId);
+                    listGastNaam.setModel(modelNaam);
+                    listGastAdres.setModel(modelAdres);
+                    listGastPostcode.setModel(modelPostode);
+                    listGastWoonplaats.setModel(modelWoonplaats);
+                    listGastTelnr.setModel(modelTelnr);
+                    listGastEmail.setModel(modelEmail);
+                    listGastGebdatum.setModel(modelGebdatum);
+                    listGastGeslacht.setModel(modelGeslacht);
+                    listGastRating.setModel(modelRating);
+                    listGastBekspeler.setModel(modelBekspeler);
+
 
                     while(rs.next()){
                         String id = rs.getString("idgast");
+                        String naam = rs.getString("naam");
+                        String adres = rs.getString("adres");
+                        String postcode = rs.getString("postcode");
+                        String woonplaats = rs.getString("woonplaats");
+                        String telnr = rs.getString("telnr");
+                        String email = rs.getString("email");
+                        String gebdatum = rs.getString("gebdatum");
+                        String geslacht = rs.getString("geslacht");
+                        String rating = rs.getString("rating");
+                        String bekspeler = rs.getString("bekspeler");
 
                         modelId.addElement(id);
+                        modelNaam.addElement(naam);
+                        modelAdres.addElement(adres);
+                        modelPostode.addElement(postcode);
+                        modelWoonplaats.addElement(woonplaats);
+                        modelTelnr.addElement(telnr);
+                        modelEmail.addElement(email);
+                        modelGebdatum.addElement(gebdatum);
+                        modelGeslacht.addElement(geslacht);
+                        modelRating.addElement(rating);
+                        modelBekspeler.addElement(bekspeler);
+
                     }
 
                 } catch (SQLException exception){
