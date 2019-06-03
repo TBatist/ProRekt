@@ -76,6 +76,16 @@ public class GUI_Form {
     private JList listToernooiInsDatum;
     private JTextField textZoekG;
     private JButton zoekButton;
+    private JTextField textFieldZoekOpDatumMc;
+    private JList listMasterclassId;
+    private JList listMastercalssDatum;
+    private JList listMasterclassBeginTijd;
+    private JList listMasterclassEindTijd;
+    private JList listMasterclassPrijs;
+    private JList listMasterclassMinRating;
+    private JList listMasterclassIdGast;
+    private JButton buttonZoekMc;
+    private JButton buttonLaatAllesZienMc;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -278,6 +288,26 @@ public class GUI_Form {
                     exception.printStackTrace();
                 }
 
+            }
+        });
+
+        buttonLaatAllesZienMc.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DefaultListModel modelIdMc = new DefaultListModel();
+                DefaultListModel modelDMc = new DefaultListModel();
+                DefaultListModel modelBTMc = new DefaultListModel();
+                DefaultListModel modelETMc = new DefaultListModel();
+                DefaultListModel modelPMc = new DefaultListModel();
+                DefaultListModel modelMrMc = new DefaultListModel();
+                DefaultListModel modelIdGMc = new DefaultListModel();
+                listMasterclassId.setModel(modelIdMc);
+                listMastercalssDatum.setModel(modelDMc);
+                listMasterclassBeginTijd.setModel(modelBTMc);
+                listMasterclassEindTijd.setModel(modelETMc);
+                listMasterclassPrijs.setModel(modelPMc);
+                listMasterclassMinRating.setModel(modelMrMc);
+                listMasterclassIdGast.setModel(modelIdGMc);
             }
         });
     }
