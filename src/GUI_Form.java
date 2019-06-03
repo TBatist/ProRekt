@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.nimbus.State;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
@@ -75,7 +72,18 @@ public class GUI_Form {
     private JList listToernooiInleg;
     private JList listToernooiInsDatum;
     private JTextField textZoekG;
-    private JButton zoekButton;
+    private JButton buttonZoekG;
+    private JList listGastId;
+    private JList listGastNaam;
+    private JList listGastAdres;
+    private JList listGastPostcode;
+    private JList listGastWoonplaats;
+    private JList listGastTelnr;
+    private JList listGastEmail;
+    private JList listGastGebdatum;
+    private JList listGastGeslacht;
+    private JList listGastRating;
+    private JList listGastBekspeler;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -278,6 +286,31 @@ public class GUI_Form {
                     exception.printStackTrace();
                 }
 
+            }
+        });
+        buttonZoekG.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+
+                try{
+                    String zoekNaam = textZoekG.getText();
+                    ps = ConnectionManager.getConnection().prepareStatement("SELECT * FROM gast WHERE naam like '%" + zoekNaam + "%';");
+                    ResultSet rs = ps.executeQuery();
+
+                    DefaultListModel modelId = new DefaultListModel();
+
+                    listGastId.setModel(modelId);
+
+                    while(rs.next()){
+                        String id = rs.getString("idgast");
+
+                        modelId.addElement(id);
+                    }
+
+                } catch (SQLException exception){
+                    exception.printStackTrace();
+                }
             }
         });
     }
