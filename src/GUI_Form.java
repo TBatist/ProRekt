@@ -1,8 +1,6 @@
 import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.nimbus.State;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -111,6 +109,8 @@ public class GUI_Form {
     private JTextField statusTextField;
     private JTextField statusMasterclassTextField;
     private JButton wijzigGastButton;
+    private JButton verwijderButton;
+    private JButton wijzigButton;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -559,6 +559,79 @@ public class GUI_Form {
                 } catch (SQLException exception){
                     exception.printStackTrace();
                 }
+            }
+        });
+
+        verwijderButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idIndex = Integer.parseInt((String) listGastId.getSelectedValue());
+                try{
+                    ps = ConnectionManager.getConnection().prepareStatement("DELETE FROM gast WHERE idgast = " + idIndex + ";");
+                    ps.executeUpdate();
+                } catch(SQLException exception){
+                    exception.printStackTrace();
+                }
+            }
+        });
+
+        wijzigButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idIndex = Integer.parseInt((String) listToernooiId.getSelectedValue());
+                JPanel optionPanel = new JPanel();
+                optionPanel.setLayout(new GridLayout(9,1));
+
+                try {
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT * FROM toernooi WHERE idToernooi = " + idIndex + ";");
+
+                    if (rs.next()) {
+                        JTextField id = new JTextField(rs.getString("idToernooi"));
+                        int tempId = Integer.parseInt(id.getText());
+                        JTextField datum = new JTextField(rs.getString("datum"));
+                        JTextField begin = new JTextField(rs.getString("begintijd"));
+                        JTextField eind = new JTextField(rs.getString("eindtijd"));
+                        JTextField beschrijving = new JTextField(rs.getString("beschrijving"));
+                        JTextField winnaar = new JTextField(rs.getString("winnaar"));
+                        JTextField maxInschr = new JTextField(rs.getString("maxInschrijvingen"));
+                        JTextField inleg = new JTextField(rs.getString("inleg"));
+                        JTextField insdatum = new JTextField(rs.getString("insDatum"));
+
+                        optionPanel.add(id);
+                        optionPanel.add(datum);
+                        optionPanel.add(begin);
+                        optionPanel.add(eind);
+                        optionPanel.add(beschrijving);
+                        optionPanel.add(winnaar);
+                        optionPanel.add(maxInschr);
+                        optionPanel.add(inleg);
+                        optionPanel.add(insdatum);
+
+                        int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                        if(result == JOptionPane.OK_OPTION) {
+                            try{
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE toernooi SET idToernooi = ?, datum = ?, begintijd = ?, eindtijd = ?, beschrijving = ?, winnaar = ?, maxInschrijvingen = ?, inleg = ?, insdatum = ? WHERE idToernooi = " + tempId);
+                                ps.setInt(1, tempId);
+                                ps.setDate(2, Date.valueOf(datum.getText()));
+                                ps.setTime(3, Time.valueOf(begin.getText()));
+                                ps.setTime(4, Time.valueOf(eind.getText()));
+                                ps.setString(5, beschrijving.getText());
+                                ps.setString(6, winnaar.getText());
+                                ps.setInt(7, Integer.parseInt(maxInschr.getText()));
+                                ps.setInt(8, Integer.parseInt(inleg.getText()));
+                                ps.setDate(9, Date.valueOf(insdatum.getText()));
+                                ps.executeUpdate();
+                            } catch (SQLException exception) {
+                                exception.printStackTrace();
+                            }
+                        }
+                    }
+                } catch (SQLException exception){
+                    exception.printStackTrace();
+                }
+
             }
         });
     }
