@@ -538,6 +538,14 @@
                   <text value="Eindtijd"/>
                 </properties>
               </component>
+              <component id="bdffc" class="javax.swing.JButton" binding="wijzigButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Wijzig"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="ef7e1" layout-manager="GridLayoutManager" row-count="3" column-count="11" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -771,6 +779,14 @@
                 </constraints>
                 <properties>
                   <text value="Wijzig gast"/>
+                </properties>
+              </component>
+              <component id="ad48b" class="javax.swing.JButton" binding="verwijderButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Verwijder"/>
                 </properties>
               </component>
             </children>
