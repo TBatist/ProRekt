@@ -364,6 +364,13 @@ public class GUI_Form {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi");
+
+                    Statement st2 = con.createStatement();
+                    ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
+
                     int GastID = Integer.parseInt(txtIdGast.getText());
                     int toernooiID = Integer.parseInt(txtToernooiID.getText());
                     String betaald;
@@ -372,11 +379,15 @@ public class GUI_Form {
                     } else {
                         betaald = "N";
                     }
-                    ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
-                    ps.setInt(1,GastID);
-                    ps.setInt(2, toernooiID);
-                    ps.setString(3,betaald);
-                    ps.executeUpdate();
+                    if (Integer.parseInt(rs2.getString("COUNT(idGast)")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
+                        textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
+                    } else {
+                        ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
+                        ps.setInt(1,GastID);
+                        ps.setInt(2, toernooiID);
+                        ps.setString(3,betaald);
+                        ps.executeUpdate();
+                    }
 
                     txtIdGast.setText("");
                     txtToernooiID.setText("");
@@ -402,6 +413,7 @@ public class GUI_Form {
                     } else{
                         betaald = "N";
                     }
+                    //if ()
                     ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
                     ps.setInt(1, gastID);
                     ps.setInt(2, MCID);
