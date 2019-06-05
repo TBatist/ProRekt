@@ -1,3 +1,4 @@
+import Registreer.registreerGast;
 import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
@@ -11,7 +12,7 @@ import java.time.Period;
 public class GUI_Form {
     private JTabbedPane tabbedPane;
     private JPanel panel;
-    private JTextField textNaam;
+    public JTextField textNaam;
     private JTextField textAdres;
     private JTextField textPostcode;
     private JTextField textWoonplaats;
@@ -152,45 +153,11 @@ public class GUI_Form {
                 if (p.getYears() < 18){
                     textResultG.setText("Deze gast is onder de 18 jaar en mag niet meespelen.");
                 }
-                else {
-
+                else{
                     try {
                         ps = ConnectionManager.getConnection().prepareStatement(insertGast);
-                        ps.setString(1, naam);
-                        ps.setString(2, adres);
-                        ps.setString(3, postcode);
-                        ps.setString(4, woonplaats);
-                        ps.setString(5, telnr);
-                        ps.setString(6, email);
-                        ps.setDate(7, gebdatum);
-                        ps.setString(8, geslacht);
-                        ps.setString(9, bekSpeler);
-
-                        ps.executeUpdate();
-
-                        textNaam.setText("");
-                        textAdres.setText("");
-                        textPostcode.setText("");
-                        textWoonplaats.setText("");
-                        textTelnr.setText("");
-                        textEmail.setText("");
-                        textGebdatum.setText("");
-                        if (manRadioButton.isSelected()) {
-                            manRadioButton.setSelected(false);
-                        } else if (vrouwRadioButton.isSelected()) {
-                            vrouwRadioButton.setSelected(false);
-                        } else if (andersRadioButton.isSelected()) {
-                            andersRadioButton.setSelected(false);
-                        }
-                        if (jaRadioButton.isSelected()) {
-                            jaRadioButton.setSelected(false);
-                        } else if (neeRadioButton.isSelected()) {
-                            neeRadioButton.setSelected(false);
-                        }
-
-                        textResultG.setText(naam + " is toegevoegd aan de database.");
-
-                    } catch (SQLException exception) {
+                        registreerGast.registreerG(naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekSpeler, ps);
+                    } catch (SQLException exception){
                         exception.printStackTrace();
                     }
                 }
@@ -273,9 +240,15 @@ public class GUI_Form {
         buttonZoekT.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                Date date = Date.valueOf(textZoekT.getText());
+                try{
+                    ps = ConnectionManager.getConnection().prepareStatement("SELECT * FROM toernooi WHERE datum = " + date);
+                } catch (SQLException exception){
+                    exception.printStackTrace();
+                }
             }
         });
+
         buttonZoekAllesT.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e){
@@ -323,8 +296,6 @@ public class GUI_Form {
                         modelIn.addElement(inleg);
                         modelID.addElement(insdatum);
                     }
-
-
 
                 } catch(SQLException exception){
                     exception.printStackTrace();
