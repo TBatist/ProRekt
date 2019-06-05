@@ -483,7 +483,7 @@ public class GUI_Form {
                     ResultSet rs = st.executeQuery("SELECT * FROM masterclass");
 
                     while(rs.next()){
-                        String Masterclass = rs.getString("idMasterclass");
+                        String Masterclass = rs.getString("idmc");
                         String datum = rs.getString("datum");
                         modelIdMc.addElement(Masterclass);
                         modelDMc.addElement(datum);
