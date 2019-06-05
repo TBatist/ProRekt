@@ -666,7 +666,7 @@ public class GUI_Form {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Full House");
         frame.setContentPane(new GUI_Form().panel);
-        frame.setSize(700,800);
+        frame.setSize(800,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.pack();
