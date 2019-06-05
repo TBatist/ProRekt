@@ -111,11 +111,12 @@ public class GUI_Form {
     private JButton wijzigGastButton;
     private JButton verwijderButton;
     private JButton wijzigButton;
+    private JTextField BGastIDtxt;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
     private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum) VALUES(?,?,?,?,?,?,?)";
-    private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating) VALUES (?,?,?,?,?)";
+    private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating, geverMasterclass) VALUES (?,?,?,?,?,?)";
     private String insertMcInschrijving = "INSERT INTO InschrijvingMasterclass (idGast, idmc, betaald) VALUES (?,?,?)";
     private String insertToernooiInschrijving = "INSERT INTO inschrijvingtoernooi (idGast, idToernooi, betaald) VALUES (?,?,?)";
 
@@ -243,6 +244,7 @@ public class GUI_Form {
                 Time eindTijd = Time.valueOf(textEindMC.getText());
                 double prijs = Double.parseDouble(textPrijsMC.getText());
                 int minRating = Integer.parseInt(textMinratingMC.getText());
+                int BekendeSpelerID = Integer.parseInt(BGastIDtxt.getText());
 
                 try{
                     ps = ConnectionManager.getConnection().prepareStatement(insertMC);
@@ -251,6 +253,7 @@ public class GUI_Form {
                     ps.setTime(3, eindTijd);
                     ps.setDouble(4, prijs);
                     ps.setInt(5, minRating);
+                    ps.setInt(6, BekendeSpelerID);
 
                     ps.executeUpdate();
 
@@ -268,6 +271,27 @@ public class GUI_Form {
 
             }
         });
+
+
+
+//todo
+        /*public boolean GastAllowed (int BGastID) {
+            String YesNo = "";
+            try {
+                ps = ConnectionManager.getConnection().prepareStatement("SELECT bekspeler FROM gast WHERE idgast = " + BGastID);
+                ResultSet rs = ps.executeQuery();
+                YesNo = rs.getString("bekspeler");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (YesNo == "Y") {
+
+            }
+            else{
+
+            }
+        }*/
+
         buttonZoekT.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
