@@ -1,4 +1,3 @@
-import Registreer.registreerGast;
 import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
@@ -156,7 +155,39 @@ public class GUI_Form {
                 else{
                     try {
                         ps = ConnectionManager.getConnection().prepareStatement(insertGast);
-                        registreerGast.registreerG(naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekSpeler, ps);
+                        ps.setString(1, naam);
+                        ps.setString(2, adres);
+                        ps.setString(3, postcode);
+                        ps.setString(4, woonplaats);
+                        ps.setString(5, telnr);
+                        ps.setString(6, email);
+                        ps.setDate(7, gebdatum);
+                        ps.setString(8, geslacht);
+                        ps.setString(9, bekSpeler);
+
+                        ps.executeUpdate();
+
+                        textNaam.setText("");
+                        textAdres.setText("");
+                        textPostcode.setText("");
+                        textWoonplaats.setText("");
+                        textTelnr.setText("");
+                        textEmail.setText("");
+                        textGebdatum.setText("");
+                        if (manRadioButton.isSelected()) {
+                            manRadioButton.setSelected(false);
+                        } else if (vrouwRadioButton.isSelected()) {
+                            vrouwRadioButton.setSelected(false);
+                        } else if (andersRadioButton.isSelected()) {
+                            andersRadioButton.setSelected(false);
+                        }
+                        if (jaRadioButton.isSelected()) {
+                            jaRadioButton.setSelected(false);
+                        } else if (neeRadioButton.isSelected()) {
+                            neeRadioButton.setSelected(false);
+                        }
+
+                        textResultG.setText(naam + " is toegevoegd aan de database.");
                     } catch (SQLException exception){
                         exception.printStackTrace();
                     }
