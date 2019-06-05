@@ -13,30 +13,33 @@ public class Toernooi {
 
     public void tafelsMaken(){
         int inschrijvingen;
-        gastenLijst.add("1");
-        gastenLijst.add("2");
-        gastenLijst.add("3");
-        gastenLijst.add("4");
-        gastenLijst.add("5");
-        gastenLijst.add("6");
-        gastenLijst.add("7");
-        gastenLijst.add("8");
-        gastenLijst.add("9");
-        gastenLijst.add("10");
-        //Collections.shuffle(gastenLijst); // Deze gastenLijst is even een test voor het shuffelen en plaatsen van gasten!
+        //Collections.shuffle(gastenLijst);
 
-        Integer[] tafel1 = new Integer[5];
-        Integer[] tafel2 = new Integer[5];
-        Integer[] tafel3 = new Integer[5];
+        String[] tafel1 = new String[5]; // moet tweedimensionale array worden
+        String[] tafel2 = new String[5];
+        String[] tafel3 = new String[5];
 
         try {
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
             ResultSet  rs = st.executeQuery("select count(idGast) as 'inschrijvingen' from inschrijvingtoernooi where idToernooi = 1");
-            inschrijvingen = rs.getInt("inschrijvingen") ;
+            inschrijvingen = rs.getInt("inschrijvingen");
+            rs = st.executeQuery("select idGast as 'inschrijvingen' from inschrijvingtoernooi where idToernooi = 1");
+            gastenLijst.add(rs.getString(1));
+            gastenLijst.add(rs.getString(2));
+            gastenLijst.add(rs.getString(3));
+            gastenLijst.add(rs.getString(4));
+            gastenLijst.add(rs.getString(5));
+            gastenLijst.add(rs.getString(6));
+            gastenLijst.add(rs.getString(7));
 
-            for (int i = 1; i <= inschrijvingen; i++) {
+            int tafel = 0
 
+            for (int i = 0; i < 7; i++) {
+                for (int j = 0; j < ; j++) {
+
+                }
+                tafel1[i] = gastenLijst.get(i);
             }
 
         } catch (SQLException exception){exception.printStackTrace();}
