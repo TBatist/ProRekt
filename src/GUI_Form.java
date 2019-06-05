@@ -112,6 +112,7 @@ public class GUI_Form {
     private JButton verwijderButton;
     private JButton wijzigButton;
     private JTextField BGastIDtxt;
+    private JScrollPane scrollPaneGast;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";

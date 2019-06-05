@@ -33,10 +33,10 @@ public class Toernooi {
             gastenLijst.add(rs.getString(6));
             gastenLijst.add(rs.getString(7));
 
-            int tafel = 0
+            int tafel = 0;
 
             for (int i = 0; i < 7; i++) {
-                for (int j = 0; j < ; j++) {
+                for (int j = 0; j < 8; j++) {
 
                 }
                 tafel1[i] = gastenLijst.get(i);
