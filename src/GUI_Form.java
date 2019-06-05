@@ -367,7 +367,7 @@ public class GUI_Form {
                 try{
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi");
+                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
 
                     Statement st2 = con.createStatement();
                     ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
@@ -380,21 +380,22 @@ public class GUI_Form {
                     } else {
                         betaald = "N";
                     }
+
                     while(rs2.next() & rs.next()) {
                         if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
-                            textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
+                            statusTextField.setText("De limiet van gasten is voor dit toernooi bereikt");
                         } else {
                             ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
                             ps.setInt(1, GastID);
                             ps.setInt(2, toernooiID);
                             ps.setString(3, betaald);
                             ps.executeUpdate();
+                            statusTextField.setText("Inschrijving gelukt!");
                         }
                     }
                     txtIdGast.setText("");
                     txtToernooiID.setText("");
                     betaaldToernooiCheckBox.setSelected(false);
-                    statusTextField.setText("Inschrijving gelukt!");
 
                 } catch (SQLException exc) {
                     statusTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn.");
@@ -407,6 +408,13 @@ public class GUI_Form {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM masterclass WHERE idmc = " + Integer.parseInt(txtMCID.getText()));
+
+                    Statement st2 = con.createStatement();
+                    ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM InschrijvingMasterclass WHERE idmc = " + Integer.parseInt(txtMCID.getText()));
+
                     int gastID = Integer.parseInt(txtGastID.getText());
                     int MCID = Integer.parseInt(txtMCID.getText());
                     String betaald;
@@ -415,17 +423,22 @@ public class GUI_Form {
                     } else{
                         betaald = "N";
                     }
-                    //if ()
-                    ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
-                    ps.setInt(1, gastID);
-                    ps.setInt(2, MCID);
-                    ps.setString(3, betaald);
-                    ps.executeUpdate();
+                    while(rs2.next() & rs.next()) {
+                        if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
+                            statusTextField.setText("De limiet van gasten is voor dit toernooi bereikt");
+                        } else {
+                            ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
+                            ps.setInt(1, gastID);
+                            ps.setInt(2, MCID);
+                            ps.setString(3, betaald);
+                            ps.executeUpdate();
+                            statusMasterclassTextField.setText("Inschrijving gelukt!");
+                        }
+                    }
 
                     txtGastID.setText("");
                     txtMCID.setText("");
                     betaaldCheckBox.setSelected(false);
-                    statusMasterclassTextField.setText("Inschrijving gelukt!");
                 }
                 catch (SQLException ex){
                     statusMasterclassTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn..");
