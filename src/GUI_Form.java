@@ -271,6 +271,27 @@ public class GUI_Form {
 
             }
         });
+
+
+
+//todo
+        /*public boolean GastAllowed (int BGastID) {
+            String YesNo = "";
+            try {
+                ps = ConnectionManager.getConnection().prepareStatement("SELECT bekspeler FROM gast WHERE idgast = " + BGastID);
+                ResultSet rs = ps.executeQuery();
+                YesNo = rs.getString("bekspeler");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (YesNo == "Y") {
+
+            }
+            else{
+
+            }
+        }*/
+
         buttonZoekT.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
