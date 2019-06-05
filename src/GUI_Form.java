@@ -113,6 +113,7 @@ public class GUI_Form {
     private JButton wijzigButton;
     private JTextField BGastIDtxt;
     private JScrollPane scrollPaneGast;
+    private JScrollPane scrollPaneToernooi;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -369,7 +370,7 @@ public class GUI_Form {
                     ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi");
 
                     Statement st2 = con.createStatement();
-                    ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
+                    ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
 
                     int GastID = Integer.parseInt(txtIdGast.getText());
                     int toernooiID = Integer.parseInt(txtToernooiID.getText());
@@ -379,16 +380,17 @@ public class GUI_Form {
                     } else {
                         betaald = "N";
                     }
-                    if (Integer.parseInt(rs2.getString("COUNT(idGast)")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
-                        textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
-                    } else {
-                        ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
-                        ps.setInt(1,GastID);
-                        ps.setInt(2, toernooiID);
-                        ps.setString(3,betaald);
-                        ps.executeUpdate();
+                    while(rs2.next() & rs.next()) {
+                        if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
+                            textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
+                        } else {
+                            ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
+                            ps.setInt(1, GastID);
+                            ps.setInt(2, toernooiID);
+                            ps.setString(3, betaald);
+                            ps.executeUpdate();
+                        }
                     }
-
                     txtIdGast.setText("");
                     txtToernooiID.setText("");
                     betaaldToernooiCheckBox.setSelected(false);
