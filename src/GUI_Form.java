@@ -692,22 +692,36 @@ public class GUI_Form {
                         JTextField gever = new JTextField(rs.getString("geverMasterclass"));
 
                         optionPanel.add(new JLabel("ID"));
-                        optionPanel.add(new JLabel("Datum"));
-                        optionPanel.add(new JLabel("Begintjid"));
-                        optionPanel.add(new JLabel("Eindtijd"));
-                        optionPanel.add(new JLabel("Prijs"));
-                        optionPanel.add(new JLabel("Minimum rating"));
-                        optionPanel.add(new JLabel("Gever masterclass"));
-
                         optionPanel.add(id);
+                        optionPanel.add(new JLabel("Datum"));
                         optionPanel.add(datum);
+                        optionPanel.add(new JLabel("Begintjid"));
                         optionPanel.add(begin);
+                        optionPanel.add(new JLabel("Eindtijd"));
                         optionPanel.add(eind);
+                        optionPanel.add(new JLabel("Prijs"));
                         optionPanel.add(prijs);
+                        optionPanel.add(new JLabel("Minimum rating"));
                         optionPanel.add(minrating);
+                        optionPanel.add(new JLabel("Gever masterclass"));
                         optionPanel.add(gever);
 
                         int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                        if(result == JOptionPane.OK_OPTION){
+                            try{
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE masterclass SET idmc = ?, datum = ?, begin = ?, eind = ?, prijs = ?, minRating = ?, geverMasterclass = ? WHERE idmc = " + idIndex);
+                                ps.setInt(1, Integer.parseInt(id.getText()));
+                                ps.setDate(2, Date.valueOf(datum.getText()));
+                                ps.setTime(3, Time.valueOf(begin.getText()));
+                                ps.setTime(4, Time.valueOf(eind.getText()));
+                                ps.setDouble(5, Double.parseDouble(prijs.getText()));
+                                ps.setInt(6, Integer.parseInt(minrating.getText()));
+                                ps.setInt(7, Integer.parseInt(gever.getText()));
+                                ps.executeUpdate();
+                            } catch (SQLException exception) {
+                                exception.printStackTrace();
+                            }
+                        }
                     }
 
                 } catch (SQLException exception){
