@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.scripts.JO;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -114,6 +112,7 @@ public class GUI_Form {
     private JTextField BGastIDtxt;
     private JScrollPane scrollPaneGast;
     private JScrollPane scrollPaneToernooi;
+    private JButton wijzigButtonMC;
 
     private Masterclass mc = new Masterclass();
     private PreparedStatement ps;
@@ -547,7 +546,6 @@ public class GUI_Form {
 
                     if(rs.next()) {
                         JTextField id = new JTextField(rs.getString("idgast"));
-                        int tempId = Integer.parseInt(id.getText());
                         JTextField naam = new JTextField(rs.getString("naam"));
                         JTextField adres = new JTextField(rs.getString("adres"));
                         JTextField postcode = new JTextField(rs.getString("postcode"));
@@ -575,7 +573,7 @@ public class GUI_Form {
 
                         if (result == JOptionPane.OK_OPTION) {
                             try {
-                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET idgast = ?, naam = ?, adres = ?, postcode = ?, woonplaats = ?, telnr = ?, email = ?, gebdatum = ?, geslacht = ?, rating = ?, bekspeler = ? WHERE idgast = " + tempId + ";");
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET idgast = ?, naam = ?, adres = ?, postcode = ?, woonplaats = ?, telnr = ?, email = ?, gebdatum = ?, geslacht = ?, rating = ?, bekspeler = ? WHERE idgast = " + idIndex + ";");
                                 ps.setInt(1, Integer.parseInt(id.getText()));
                                 ps.setString(2, naam.getText());
                                 ps.setString(3,adres.getText());
@@ -649,7 +647,7 @@ public class GUI_Form {
                         int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                         if(result == JOptionPane.OK_OPTION) {
                             try{
-                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE toernooi SET idToernooi = ?, datum = ?, begintijd = ?, eindtijd = ?, beschrijving = ?, winnaar = ?, maxInschrijvingen = ?, inleg = ?, insdatum = ? WHERE idToernooi = " + tempId);
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE toernooi SET idToernooi = ?, datum = ?, begintijd = ?, eindtijd = ?, beschrijving = ?, winnaar = ?, maxInschrijvingen = ?, inleg = ?, insdatum = ? WHERE idToernooi = " + idIndex);
                                 ps.setInt(1, tempId);
                                 ps.setDate(2, Date.valueOf(datum.getText()));
                                 ps.setTime(3, Time.valueOf(begin.getText()));
@@ -669,6 +667,34 @@ public class GUI_Form {
                     exception.printStackTrace();
                 }
 
+            }
+        });
+
+        wijzigButtonMC.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idIndex = Integer.parseInt((String) listMasterclassId.getSelectedValue());
+                JPanel optionPanel = new JPanel();
+                optionPanel.setLayout(new GridLayout(7,2));
+
+                try{
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT * FROM masterclass WHERE idmc = " + idIndex + ";");
+
+                    if(rs.next()){
+                        JTextField id = new JTextField(rs.getString("idmc"));
+                        JTextField datum = new JTextField(rs.getString("datum"));
+                        JTextField begin = new JTextField(rs.getString("begin"));
+                        JTextField eind = new JTextField(rs.getString("eind"));
+                        JTextField prijs = new JTextField(rs.getString("prijs"));
+                        JTextField minrating = new JTextField(rs.getString("minRating"));
+                        JTextField gever = new JTextField(rs.getString("geverMasterclass"));
+                    }
+
+                } catch (SQLException exception){
+                    exception.printStackTrace();
+                }
             }
         });
 
