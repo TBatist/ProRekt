@@ -1,13 +1,11 @@
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class Toernooi {
-    static ArrayList<Integer> gastenLijst = new ArrayList<>();
-    static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
+    private static ArrayList<Integer> gastenLijst = new ArrayList<>();
+    private static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
+    private PreparedStatement ps;
 
     public static void tafelsMaken() {
         try {
@@ -47,7 +45,12 @@ public class Toernooi {
             ResultSet rs = st.executeQuery("select * from tafelgasten");
 
             while(rs.next()){
-
+                ps = ConnectionManager.getConnection().prepareStatement("UPDATE toernooi SET idtafel = ?, idgast = ?, idtoernooi = ? WHERE idToernooi = " + tempId);
+                ps.setInt(1, tempId);
+                ps.setInt(2, Integer.valueOf());
+                ps.setTime(3, Time.valueOf(begin.getText()));
+                ps.setTime(4, Time.valueOf(eind.getText()));
+                ps.executeUpdate();
             }
         } catch (SQLException exception){
             exception.printStackTrace();

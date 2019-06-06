@@ -114,6 +114,7 @@ public class GUI_Form {
     private JTextField BGastIDtxt;
     private JScrollPane scrollPaneGast;
     private JScrollPane scrollPaneToernooi;
+    private JButton indelingMakenButton;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -673,6 +674,12 @@ public class GUI_Form {
                     exception.printStackTrace();
                 }
 
+            }
+        });
+        indelingMakenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
             }
         });
     }
