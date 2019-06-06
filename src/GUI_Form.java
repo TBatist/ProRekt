@@ -112,13 +112,11 @@ public class GUI_Form {
     private JTextField BGastIDtxt;
     private JScrollPane scrollPaneGast;
     private JScrollPane scrollPaneToernooi;
-    private JButton wijzigButtonMC;
-    private JList listMasterclassNaamGast;
 
-    private Masterclass mc = new Masterclass();
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
     private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum) VALUES(?,?,?,?,?,?,?)";
+    private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating, geverMasterclass) VALUES (?,?,?,?,?,?)";
     private String insertMcInschrijving = "INSERT INTO InschrijvingMasterclass (idGast, idmc, betaald) VALUES (?,?,?)";
     private String insertToernooiInschrijving = "INSERT INTO inschrijvingtoernooi (idGast, idToernooi, betaald) VALUES (?,?,?)";
 
@@ -246,10 +244,18 @@ public class GUI_Form {
                 Time eindTijd = Time.valueOf(textEindMC.getText());
                 double prijs = Double.parseDouble(textPrijsMC.getText());
                 int minRating = Integer.parseInt(textMinratingMC.getText());
-                int bekendeSpelerID = Integer.parseInt(BGastIDtxt.getText());
+                int BekendeSpelerID = Integer.parseInt(BGastIDtxt.getText());
 
-                if (mc.GastAllowed(bekendeSpelerID) == true){
-                    mc.registMC(datum,beginTijd,eindTijd,prijs,minRating,bekendeSpelerID);
+                try{
+                    ps = ConnectionManager.getConnection().prepareStatement(insertMC);
+                    ps.setDate(1, datum);
+                    ps.setTime(2, beginTijd);
+                    ps.setTime(3, eindTijd);
+                    ps.setDouble(4, prijs);
+                    ps.setInt(5, minRating);
+                    ps.setInt(6, BekendeSpelerID);
+
+                    ps.executeUpdate();
 
                     textDatumMC.setText("");
                     textBeginMC.setText("");
@@ -258,14 +264,33 @@ public class GUI_Form {
                     textMinratingMC.setText("");
 
                     textResultMC.setText("De masterclass op " + datum + " is toegevoegd aan de database.");
-                } else {
-                    textResultMC.setText("De masterclass is niet geregistreerd, omdat de opgegeven gever van de masterclass geen bekende speler is.");
-                }
 
+                } catch(SQLException exception){
+                    exception.printStackTrace();
+                }
 
             }
         });
 
+
+
+//todo
+        /*public boolean GastAllowed (int BGastID) {
+            String YesNo = "";
+            try {
+                ps = ConnectionManager.getConnection().prepareStatement("SELECT bekspeler FROM gast WHERE idgast = " + BGastID);
+                ResultSet rs = ps.executeQuery();
+                YesNo = rs.getString("bekspeler");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            if (YesNo == "Y") {
+
+            }
+            else{
+
+            }
+        }*/
 
         buttonZoekT.addActionListener(new ActionListener() {
             @Override
@@ -340,7 +365,7 @@ public class GUI_Form {
                 try{
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
+                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi");
 
                     Statement st2 = con.createStatement();
                     ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
@@ -353,22 +378,21 @@ public class GUI_Form {
                     } else {
                         betaald = "N";
                     }
-
                     while(rs2.next() & rs.next()) {
                         if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
-                            statusTextField.setText("De limiet van gasten is voor dit toernooi bereikt");
+                            textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
                         } else {
                             ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
                             ps.setInt(1, GastID);
                             ps.setInt(2, toernooiID);
                             ps.setString(3, betaald);
                             ps.executeUpdate();
-                            statusTextField.setText("Inschrijving gelukt!");
                         }
                     }
                     txtIdGast.setText("");
                     txtToernooiID.setText("");
                     betaaldToernooiCheckBox.setSelected(false);
+                    statusTextField.setText("Inschrijving gelukt!");
 
                 } catch (SQLException exc) {
                     statusTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn.");
@@ -381,13 +405,6 @@ public class GUI_Form {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
-                    Connection con = ConnectionManager.getConnection();
-                    Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM masterclass WHERE idmc = " + Integer.parseInt(txtMCID.getText()));
-
-                    Statement st2 = con.createStatement();
-                    ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM InschrijvingMasterclass WHERE idmc = " + Integer.parseInt(txtMCID.getText()));
-
                     int gastID = Integer.parseInt(txtGastID.getText());
                     int MCID = Integer.parseInt(txtMCID.getText());
                     String betaald;
@@ -396,22 +413,17 @@ public class GUI_Form {
                     } else{
                         betaald = "N";
                     }
-                    while(rs2.next() & rs.next()) {
-                        if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
-                            statusTextField.setText("De limiet van gasten is voor deze masterclass bereikt");
-                        } else {
-                            ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
-                            ps.setInt(1, gastID);
-                            ps.setInt(2, MCID);
-                            ps.setString(3, betaald);
-                            ps.executeUpdate();
-                            statusMasterclassTextField.setText("Inschrijving gelukt!");
-                        }
-                    }
+                    //if ()
+                    ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
+                    ps.setInt(1, gastID);
+                    ps.setInt(2, MCID);
+                    ps.setString(3, betaald);
+                    ps.executeUpdate();
 
                     txtGastID.setText("");
                     txtMCID.setText("");
                     betaaldCheckBox.setSelected(false);
+                    statusMasterclassTextField.setText("Inschrijving gelukt!");
                 }
                 catch (SQLException ex){
                     statusMasterclassTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn..");
@@ -496,7 +508,6 @@ public class GUI_Form {
                 DefaultListModel modelPMc = new DefaultListModel();
                 DefaultListModel modelMrMc = new DefaultListModel();
                 DefaultListModel modelIdGMc = new DefaultListModel();
-                DefaultListModel modelNaamGastMC = new DefaultListModel();
                 listMasterclassId.setModel(modelIdMc);
                 listMastercalssDatum.setModel(modelDMc);
                 listMasterclassBeginTijd.setModel(modelBTMc);
@@ -504,35 +515,17 @@ public class GUI_Form {
                 listMasterclassPrijs.setModel(modelPMc);
                 listMasterclassMinRating.setModel(modelMrMc);
                 listMasterclassIdGast.setModel(modelIdGMc);
-                listMasterclassNaamGast.setModel(modelNaamGastMC);
 
                 try {
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM masterclass");
-                    Statement st2 = con.createStatement();
-
 
                     while(rs.next()){
                         String Masterclass = rs.getString("idmc");
                         String datum = rs.getString("datum");
-                        Time begin = rs.getTime("begin");
-                        Time eind = rs.getTime("eind");
-                        double prijs = rs.getDouble("prijs");
-                        int minRating = rs.getInt("minRating");
-                        int geverMasterclass = rs.getInt("geverMasterclass");
-                        ResultSet rs2 = st2.executeQuery("SELECT * FROM gast WHERE idgast = " + geverMasterclass);
-                        if(rs2.next()) {
-                            String naamGeverMC = rs2.getString("naam");
-                            modelIdMc.addElement(Masterclass);
-                            modelDMc.addElement(datum);
-                            modelBTMc.addElement(begin);
-                            modelETMc.addElement(eind);
-                            modelPMc.addElement(prijs);
-                            modelMrMc.addElement(minRating);
-                            modelIdGMc.addElement(geverMasterclass);
-                            modelNaamGastMC.addElement(naamGeverMC);
-                        }
+                        modelIdMc.addElement(Masterclass);
+                        modelDMc.addElement(datum);
                     }
 
 
@@ -556,6 +549,7 @@ public class GUI_Form {
 
                     if(rs.next()) {
                         JTextField id = new JTextField(rs.getString("idgast"));
+                        int tempId = Integer.parseInt(id.getText());
                         JTextField naam = new JTextField(rs.getString("naam"));
                         JTextField adres = new JTextField(rs.getString("adres"));
                         JTextField postcode = new JTextField(rs.getString("postcode"));
@@ -583,7 +577,7 @@ public class GUI_Form {
 
                         if (result == JOptionPane.OK_OPTION) {
                             try {
-                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET idgast = ?, naam = ?, adres = ?, postcode = ?, woonplaats = ?, telnr = ?, email = ?, gebdatum = ?, geslacht = ?, rating = ?, bekspeler = ? WHERE idgast = " + idIndex + ";");
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET idgast = ?, naam = ?, adres = ?, postcode = ?, woonplaats = ?, telnr = ?, email = ?, gebdatum = ?, geslacht = ?, rating = ?, bekspeler = ? WHERE idgast = " + tempId + ";");
                                 ps.setInt(1, Integer.parseInt(id.getText()));
                                 ps.setString(2, naam.getText());
                                 ps.setString(3,adres.getText());
@@ -596,7 +590,6 @@ public class GUI_Form {
                                 ps.setInt(10, Integer.parseInt(rating.getText()));
                                 ps.setString(11, bekspeler.getText());
                                 ps.executeUpdate();
-
                             } catch (SQLException exception) {
                                 exception.printStackTrace();
                             }
@@ -658,7 +651,7 @@ public class GUI_Form {
                         int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                         if(result == JOptionPane.OK_OPTION) {
                             try{
-                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE toernooi SET idToernooi = ?, datum = ?, begintijd = ?, eindtijd = ?, beschrijving = ?, winnaar = ?, maxInschrijvingen = ?, inleg = ?, insdatum = ? WHERE idToernooi = " + idIndex);
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE toernooi SET idToernooi = ?, datum = ?, begintijd = ?, eindtijd = ?, beschrijving = ?, winnaar = ?, maxInschrijvingen = ?, inleg = ?, insdatum = ? WHERE idToernooi = " + tempId);
                                 ps.setInt(1, tempId);
                                 ps.setDate(2, Date.valueOf(datum.getText()));
                                 ps.setTime(3, Time.valueOf(begin.getText()));
@@ -680,76 +673,14 @@ public class GUI_Form {
 
             }
         });
-
-        wijzigButtonMC.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int idIndex = Integer.parseInt((String) listMasterclassId.getSelectedValue());
-                JPanel optionPanel = new JPanel();
-                optionPanel.setLayout(new GridLayout(7,2));
-
-                try{
-                    Connection con = ConnectionManager.getConnection();
-                    Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT * FROM masterclass WHERE idmc = " + idIndex + ";");
-
-                    if(rs.next()){
-                        JTextField id = new JTextField(rs.getString("idmc"));
-                        JTextField datum = new JTextField(rs.getString("datum"));
-                        JTextField begin = new JTextField(rs.getString("begin"));
-                        JTextField eind = new JTextField(rs.getString("eind"));
-                        JTextField prijs = new JTextField(rs.getString("prijs"));
-                        JTextField minrating = new JTextField(rs.getString("minRating"));
-                        JTextField gever = new JTextField(rs.getString("geverMasterclass"));
-
-                        optionPanel.add(new JLabel("ID"));
-                        optionPanel.add(id);
-                        optionPanel.add(new JLabel("Datum"));
-                        optionPanel.add(datum);
-                        optionPanel.add(new JLabel("Begintjid"));
-                        optionPanel.add(begin);
-                        optionPanel.add(new JLabel("Eindtijd"));
-                        optionPanel.add(eind);
-                        optionPanel.add(new JLabel("Prijs"));
-                        optionPanel.add(prijs);
-                        optionPanel.add(new JLabel("Minimum rating"));
-                        optionPanel.add(minrating);
-                        optionPanel.add(new JLabel("Gever masterclass"));
-                        optionPanel.add(gever);
-
-                        int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
-                        if(result == JOptionPane.OK_OPTION){
-                            try{
-                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE masterclass SET idmc = ?, datum = ?, begin = ?, eind = ?, prijs = ?, minRating = ?, geverMasterclass = ? WHERE idmc = " + idIndex);
-                                ps.setInt(1, Integer.parseInt(id.getText()));
-                                ps.setDate(2, Date.valueOf(datum.getText()));
-                                ps.setTime(3, Time.valueOf(begin.getText()));
-                                ps.setTime(4, Time.valueOf(eind.getText()));
-                                ps.setDouble(5, Double.parseDouble(prijs.getText()));
-                                ps.setInt(6, Integer.parseInt(minrating.getText()));
-                                ps.setInt(7, Integer.parseInt(gever.getText()));
-                                ps.executeUpdate();
-                            } catch (SQLException exception) {
-                                exception.printStackTrace();
-                            }
-                        }
-                    }
-
-                } catch (SQLException exception){
-                    exception.printStackTrace();
-                }
-            }
-        });
-
-
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Full House");
         frame.setContentPane(new GUI_Form().panel);
-        frame.setSize(1300,500);
+        frame.setSize(800,800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        //frame.pack();
+        frame.pack();
     }
 }
