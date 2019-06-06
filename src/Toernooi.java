@@ -42,20 +42,21 @@ public class Toernooi {
         try{
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select * from tafelgasten");
+            //ResultSet rs = st.executeQuery("select * from tafelgasten");
 
             int gastNummer = 0;
             int tafelNummer = 0;
 
-            while(rs.next()){
-                ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ? WHERE idToernooi = " + idToernooi);
+            //while(rs.next()){
+                ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?");
                 ps.setInt(1, idToernooi);
                 ps.setInt(2, gastenLijst.get(gastNummer));
                 if(gastNummer % 4 == 0 && gastNummer != 0)
                     tafelNummer++;
                 ps.setInt(3, tafelNummer);
                 gastNummer++;
-            }
+                ps.executeUpdate();
+            //}
         } catch (SQLException exception){
             exception.printStackTrace();
         }
