@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Toernooi {
-    static ArrayList<Integer> gastenLijst = new ArrayList<>();
-    static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
-    private PreparedStatement ps;
+    private static ArrayList<Integer> gastenLijst = new ArrayList<>();
+    private static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
+    private static PreparedStatement ps;
 
     public static void tafelsMaken() {
         try {
@@ -38,18 +38,23 @@ public class Toernooi {
         }
     }
 
-    public void toevoegenDatabase(){
+    public static void toevoegenDatabase(int idToernooi){
         try{
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select * from tafelgasten");
 
+            int gastNummer = 0;
+            int tafelNummer = 0;
+
             while(rs.next()){
-                ps = ConnectionManager.getConnection().prepareStatement("UPDATE tafelgasten SET idtafel = ?, idgast = ?, idtoernooi = ? WHERE idToernooi = " + tempId);
-                ps.setInt(1, tempId);
-                ps.setDate(2, Date.valueOf(datum.getText()));
-                ps.setTime(3, Time.valueOf(begin.getText()));
-                ps.setTime(4, Time.valueOf(eind.getText()));
+                ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ? WHERE idToernooi = " + idToernooi);
+                ps.setInt(1, idToernooi);
+                ps.setInt(2, gastenLijst.get(gastNummer));
+                if(gastNummer % 4 == 0 && gastNummer != 0)
+                    tafelNummer++;
+                ps.setInt(3, tafelNummer);
+                gastNummer++;
             }
         } catch (SQLException exception){
             exception.printStackTrace();
@@ -58,17 +63,5 @@ public class Toernooi {
 
     public static void main(String[] args) {
         tafelsMaken();
-        System.out.println("Tafel 1");
-        for (int i = 0; i < 5; i++) {
-            System.out.println(tafelLijst.get(0)[i]);
-        }
-        System.out.println("Tafel 2");
-        for (int i = 0; i < 5; i++) {
-            System.out.println(tafelLijst.get(1)[i]);
-        }
-        System.out.println("Tafel 3");
-        for (int i = 0; i < 5; i++) {
-            System.out.println(tafelLijst.get(2)[i]);
         }
     }
-}

@@ -678,6 +678,8 @@ public class GUI_Form {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
+                Toernooi.tafelsMaken();
+                Toernooi.toevoegenDatabase(idToernooi);
             }
         });
     }
