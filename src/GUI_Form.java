@@ -512,8 +512,18 @@ public class GUI_Form {
                     while(rs.next()){
                         String Masterclass = rs.getString("idmc");
                         String datum = rs.getString("datum");
+                        Time begin = rs.getTime("begin");
+                        Time eind = rs.getTime("eind");
+                        double prijs = rs.getDouble("prijs");
+                        int minRating = rs.getInt("minRating");
+                        int geverMasterclass = rs.getInt("geverMasterclass");
                         modelIdMc.addElement(Masterclass);
                         modelDMc.addElement(datum);
+                        modelBTMc.addElement(begin);
+                        modelETMc.addElement(eind);
+                        modelPMc.addElement(prijs);
+                        modelMrMc.addElement(minRating);
+                        modelIdGMc.addElement(geverMasterclass);
                     }
 
 
