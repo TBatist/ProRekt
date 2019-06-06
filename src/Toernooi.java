@@ -47,7 +47,7 @@ public class Toernooi {
             int gastNummer = 0;
             int tafelNummer = 0;
 
-            //while(rs.next()){
+            while(gastNummer < gastenLijst.size()){
                 ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?");
                 ps.setInt(1, idToernooi);
                 ps.setInt(2, gastenLijst.get(gastNummer));
@@ -56,7 +56,7 @@ public class Toernooi {
                 ps.setInt(3, tafelNummer);
                 gastNummer++;
                 ps.executeUpdate();
-            //}
+            }
         } catch (SQLException exception){
             exception.printStackTrace();
         }
@@ -64,5 +64,5 @@ public class Toernooi {
 
     public static void main(String[] args) {
         tafelsMaken();
-        }
     }
+}
