@@ -113,6 +113,18 @@ public class GUI_Form {
     private JScrollPane scrollPaneGast;
     private JScrollPane scrollPaneToernooi;
     private JButton indelingMakenButton;
+    private JRadioButton deelnemersToernooiRadioButton;
+    private JRadioButton deelnemersMasterclassRadioButton;
+    private JList listGastID;
+    private JList listEventID;
+    private JList listBetaald;
+    private JTextField IDtextfield;
+    private JLabel labelGastID;
+    private JLabel labelEventID;
+    private JLabel labelBetaald;
+    private JButton zoekButtonEvent;
+    private JButton wijzigButtonMC;
+    private JList listMasterclassNaamGast;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -687,9 +699,8 @@ public class GUI_Form {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Full House");
         frame.setContentPane(new GUI_Form().panel);
-        frame.setSize(800,800);
+        frame.setSize(1300,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.pack();
     }
 }
