@@ -690,6 +690,24 @@ public class GUI_Form {
                         JTextField prijs = new JTextField(rs.getString("prijs"));
                         JTextField minrating = new JTextField(rs.getString("minRating"));
                         JTextField gever = new JTextField(rs.getString("geverMasterclass"));
+
+                        optionPanel.add(new JLabel("ID"));
+                        optionPanel.add(new JLabel("Datum"));
+                        optionPanel.add(new JLabel("Begintjid"));
+                        optionPanel.add(new JLabel("Eindtijd"));
+                        optionPanel.add(new JLabel("Prijs"));
+                        optionPanel.add(new JLabel("Minimum rating"));
+                        optionPanel.add(new JLabel("Gever masterclass"));
+
+                        optionPanel.add(id);
+                        optionPanel.add(datum);
+                        optionPanel.add(begin);
+                        optionPanel.add(eind);
+                        optionPanel.add(prijs);
+                        optionPanel.add(minrating);
+                        optionPanel.add(gever);
+
+                        int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
                     }
 
                 } catch (SQLException exception){
@@ -704,9 +722,9 @@ public class GUI_Form {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Full House");
         frame.setContentPane(new GUI_Form().panel);
-        frame.setSize(800,800);
+        frame.setSize(1300,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
-        frame.pack();
+        //frame.pack();
     }
 }
