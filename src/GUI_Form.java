@@ -113,6 +113,7 @@ public class GUI_Form {
     private JScrollPane scrollPaneGast;
     private JScrollPane scrollPaneToernooi;
     private JButton wijzigButtonMC;
+    private JList listMasterclassNaamGast;
 
     private Masterclass mc = new Masterclass();
     private PreparedStatement ps;
@@ -495,6 +496,7 @@ public class GUI_Form {
                 DefaultListModel modelPMc = new DefaultListModel();
                 DefaultListModel modelMrMc = new DefaultListModel();
                 DefaultListModel modelIdGMc = new DefaultListModel();
+                DefaultListModel modelNaamGastMC = new DefaultListModel();
                 listMasterclassId.setModel(modelIdMc);
                 listMastercalssDatum.setModel(modelDMc);
                 listMasterclassBeginTijd.setModel(modelBTMc);
@@ -502,11 +504,14 @@ public class GUI_Form {
                 listMasterclassPrijs.setModel(modelPMc);
                 listMasterclassMinRating.setModel(modelMrMc);
                 listMasterclassIdGast.setModel(modelIdGMc);
+                listMasterclassNaamGast.setModel(modelNaamGastMC);
 
                 try {
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM masterclass");
+                    Statement st2 = con.createStatement();
+
 
                     while(rs.next()){
                         String Masterclass = rs.getString("idmc");
@@ -516,6 +521,8 @@ public class GUI_Form {
                         double prijs = rs.getDouble("prijs");
                         int minRating = rs.getInt("minRating");
                         int geverMasterclass = rs.getInt("geverMasterclass");
+                        ResultSet rs2 = st2.executeQuery("SELECT * FROM gast WHERE idgast = " + geverMasterclass);
+                        String naamGeverMC = rs2.getString("naam");
                         modelIdMc.addElement(Masterclass);
                         modelDMc.addElement(datum);
                         modelBTMc.addElement(begin);
@@ -523,6 +530,7 @@ public class GUI_Form {
                         modelPMc.addElement(prijs);
                         modelMrMc.addElement(minRating);
                         modelIdGMc.addElement(geverMasterclass);
+                        modelNaamGastMC.addElement(naamGeverMC);
                     }
 
 
