@@ -5,6 +5,7 @@ import java.util.Collections;
 public class Toernooi {
     static ArrayList<Integer> gastenLijst = new ArrayList<>();
     static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
+    private PreparedStatement ps;
 
     public static void tafelsMaken() {
         try {
@@ -44,7 +45,11 @@ public class Toernooi {
             ResultSet rs = st.executeQuery("select * from tafelgasten");
 
             while(rs.next()){
-
+                ps = ConnectionManager.getConnection().prepareStatement("UPDATE tafelgasten SET idtafel = ?, idgast = ?, idtoernooi = ? WHERE idToernooi = " + tempId);
+                ps.setInt(1, tempId);
+                ps.setDate(2, Date.valueOf(datum.getText()));
+                ps.setTime(3, Time.valueOf(begin.getText()));
+                ps.setTime(4, Time.valueOf(eind.getText()));
             }
         } catch (SQLException exception){
             exception.printStackTrace();
