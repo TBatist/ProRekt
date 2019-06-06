@@ -115,10 +115,10 @@ public class GUI_Form {
     private JScrollPane scrollPaneGast;
     private JScrollPane scrollPaneToernooi;
 
+    private Masterclass mc = new Masterclass();
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
     private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum) VALUES(?,?,?,?,?,?,?)";
-    private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating, geverMasterclass) VALUES (?,?,?,?,?,?)";
     private String insertMcInschrijving = "INSERT INTO InschrijvingMasterclass (idGast, idmc, betaald) VALUES (?,?,?)";
     private String insertToernooiInschrijving = "INSERT INTO inschrijvingtoernooi (idGast, idToernooi, betaald) VALUES (?,?,?)";
 
@@ -246,18 +246,10 @@ public class GUI_Form {
                 Time eindTijd = Time.valueOf(textEindMC.getText());
                 double prijs = Double.parseDouble(textPrijsMC.getText());
                 int minRating = Integer.parseInt(textMinratingMC.getText());
-                int BekendeSpelerID = Integer.parseInt(BGastIDtxt.getText());
+                int bekendeSpelerID = Integer.parseInt(BGastIDtxt.getText());
 
-                try{
-                    ps = ConnectionManager.getConnection().prepareStatement(insertMC);
-                    ps.setDate(1, datum);
-                    ps.setTime(2, beginTijd);
-                    ps.setTime(3, eindTijd);
-                    ps.setDouble(4, prijs);
-                    ps.setInt(5, minRating);
-                    ps.setInt(6, BekendeSpelerID);
-
-                    ps.executeUpdate();
+                if (mc.GastAllowed(bekendeSpelerID) == true){
+                    mc.registMC(datum,beginTijd,eindTijd,prijs,minRating,bekendeSpelerID);
 
                     textDatumMC.setText("");
                     textBeginMC.setText("");
@@ -266,33 +258,14 @@ public class GUI_Form {
                     textMinratingMC.setText("");
 
                     textResultMC.setText("De masterclass op " + datum + " is toegevoegd aan de database.");
-
-                } catch(SQLException exception){
-                    exception.printStackTrace();
+                } else {
+                    textResultMC.setText("De masterclass is niet geregistreerd, omdat de opgegeven gever van de masterclass geen bekende speler is.");
                 }
+
 
             }
         });
 
-
-
-//todo
-        /*public boolean GastAllowed (int BGastID) {
-            String YesNo = "";
-            try {
-                ps = ConnectionManager.getConnection().prepareStatement("SELECT bekspeler FROM gast WHERE idgast = " + BGastID);
-                ResultSet rs = ps.executeQuery();
-                YesNo = rs.getString("bekspeler");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            if (YesNo == "Y") {
-
-            }
-            else{
-
-            }
-        }*/
 
         buttonZoekT.addActionListener(new ActionListener() {
             @Override
@@ -425,7 +398,7 @@ public class GUI_Form {
                     }
                     while(rs2.next() & rs.next()) {
                         if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
-                            statusTextField.setText("De limiet van gasten is voor dit toernooi bereikt");
+                            statusTextField.setText("De limiet van gasten is voor deze masterclass bereikt");
                         } else {
                             ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
                             ps.setInt(1, gastID);
@@ -688,6 +661,8 @@ public class GUI_Form {
 
             }
         });
+
+
     }
 
     public static void main(String[] args) {
