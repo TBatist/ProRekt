@@ -3,9 +3,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Toernooi {
-    private static ArrayList<Integer> gastenLijst = new ArrayList<>();
-    private static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
-    private PreparedStatement ps;
+    static ArrayList<Integer> gastenLijst = new ArrayList<>();
+    static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
 
     public static void tafelsMaken() {
         try {
@@ -45,12 +44,7 @@ public class Toernooi {
             ResultSet rs = st.executeQuery("select * from tafelgasten");
 
             while(rs.next()){
-                ps = ConnectionManager.getConnection().prepareStatement("UPDATE toernooi SET idtafel = ?, idgast = ?, idtoernooi = ? WHERE idToernooi = " + tempId);
-                ps.setInt(1, tempId);
-                ps.setInt(2, Integer.valueOf());
-                ps.setTime(3, Time.valueOf(begin.getText()));
-                ps.setTime(4, Time.valueOf(eind.getText()));
-                ps.executeUpdate();
+
             }
         } catch (SQLException exception){
             exception.printStackTrace();
