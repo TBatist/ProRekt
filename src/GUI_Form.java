@@ -522,15 +522,17 @@ public class GUI_Form {
                         int minRating = rs.getInt("minRating");
                         int geverMasterclass = rs.getInt("geverMasterclass");
                         ResultSet rs2 = st2.executeQuery("SELECT * FROM gast WHERE idgast = " + geverMasterclass);
-                        String naamGeverMC = rs2.getString("naam");
-                        modelIdMc.addElement(Masterclass);
-                        modelDMc.addElement(datum);
-                        modelBTMc.addElement(begin);
-                        modelETMc.addElement(eind);
-                        modelPMc.addElement(prijs);
-                        modelMrMc.addElement(minRating);
-                        modelIdGMc.addElement(geverMasterclass);
-                        modelNaamGastMC.addElement(naamGeverMC);
+                        if(rs2.next()) {
+                            String naamGeverMC = rs2.getString("naam");
+                            modelIdMc.addElement(Masterclass);
+                            modelDMc.addElement(datum);
+                            modelBTMc.addElement(begin);
+                            modelETMc.addElement(eind);
+                            modelPMc.addElement(prijs);
+                            modelMrMc.addElement(minRating);
+                            modelIdGMc.addElement(geverMasterclass);
+                            modelNaamGastMC.addElement(naamGeverMC);
+                        }
                     }
 
 
@@ -594,6 +596,7 @@ public class GUI_Form {
                                 ps.setInt(10, Integer.parseInt(rating.getText()));
                                 ps.setString(11, bekspeler.getText());
                                 ps.executeUpdate();
+
                             } catch (SQLException exception) {
                                 exception.printStackTrace();
                             }
