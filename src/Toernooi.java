@@ -91,16 +91,21 @@ public class Toernooi {
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select (count(idGast) * inleg), winnaar, tweedePlek from inschrijvingtoernooi I join toernooi T on I.idToernooi = T.idToernooi where I.idToernooi = " + idToernooi);
+            int winnaarID = 0;
+            int tweedePlekID = 0;
+            Double eerstePrijs = 0.00;
+            Double tweedePrijs = 0.00;
             while(rs.next()) {
                 int totaleInleg = rs.getInt(1);
-                int winnaarID = rs.getInt(2);
-                int tweedePlekID = rs.getInt(3);
-                Double eerstePrijs = (totaleInleg * 0.4);
-                Double tweedePrijs = (totaleInleg * 0.25);
+                winnaarID = rs.getInt(2);
+                tweedePlekID = rs.getInt(3);
+                eerstePrijs = (totaleInleg * 0.4);
+                tweedePrijs = (totaleInleg * 0.25);
             }
 
-            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = '"+ eerstePrijs +"' WHERE idgast = " + winnaarID);
-            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = '"+ tweedePrijs +"' WHERE idgast = " + tweedePlekID);
+            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = prijzenGeld + "+ eerstePrijs +" WHERE idgast = " + winnaarID);
+            ps.executeUpdate();
+            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = prijzenGeld + "+ tweedePrijs +" WHERE idgast = " + tweedePlekID);
             ps.executeUpdate();
 
         } catch(SQLException exception){exception.printStackTrace();}
