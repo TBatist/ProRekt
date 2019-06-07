@@ -198,10 +198,4 @@ public class Toernooi {
 
         } catch(SQLException exception){exception.printStackTrace();}
     }
-
-    public static void main(String[] args) {
-        rondeIndeling(1);
-        rondeIndelingToevoegen(1);
-            //System.out.println(tafelWinnaars.get(0));
-        }
-    }
+}
