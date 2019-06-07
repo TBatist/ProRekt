@@ -66,10 +66,21 @@ public class Toernooi {
         }
     }
 
-    public void ratingSysteem(int idToernooi){
+    public static void ratingSysteem(int idToernooi){
         try{
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("SELECT AVG(G.rating) as average FROM gast G JOIN tafelgasten T on G.idgast = T.idgast WHERE idtoernooi = " + idToernooi + "GROUP BY idtafel");
+            int avgRating = 0;
+            int tafel = 0;
+            while(rs.next()){
+                avgRating = rs.getInt("average");
+                System.out.println(avgRating);
+                tafel++;
+            }
+            for(int i = 0; i < tafel; i++){
+
+            }
             int rating;
 
         } catch(SQLException exception){exception.printStackTrace();}
@@ -80,11 +91,13 @@ public class Toernooi {
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("select (count(idGast) * inleg), winnaar, tweedePlek from inschrijvingtoernooi I join toernooi T on I.idToernooi = T.idToernooi where I.idToernooi = " + idToernooi);
-            int totaleInleg = rs.getInt(1);
-            int winnaarID = rs.getInt(2);
-            int tweedePlekID = rs.getInt(3);
-            Double eerstePrijs = (totaleInleg * 0.4);
-            Double tweedePrijs = (totaleInleg * 0.25);
+            while(rs.next()) {
+                int totaleInleg = rs.getInt(1);
+                int winnaarID = rs.getInt(2);
+                int tweedePlekID = rs.getInt(3);
+                Double eerstePrijs = (totaleInleg * 0.4);
+                Double tweedePrijs = (totaleInleg * 0.25);
+            }
 
             ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = '"+ eerstePrijs +"' WHERE idgast = " + winnaarID);
             ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = '"+ tweedePrijs +"' WHERE idgast = " + tweedePlekID);
@@ -94,6 +107,7 @@ public class Toernooi {
     }
 
     public static void main(String[] args) {
+        ratingSysteem(1);
 
         }
     }
