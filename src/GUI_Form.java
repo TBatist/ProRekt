@@ -467,6 +467,12 @@ public class GUI_Form {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try{
+                    Connection con = ConnectionManager.getConnection();
+                    Statement st = con.createStatement();
+                    ResultSet rs = st.executeQuery("SELECT rating FROM gast WHERE idgast = " + Integer.parseInt(txtMCID.getText()));
+
+                    Statement st2 = con.createStatement();
+                    ResultSet rs2 = st2.executeQuery("SELECT minRating FROM masterclass WHERE idMC = " + Integer.parseInt(txtMCID.getText()));
                     int gastID = Integer.parseInt(txtGastID.getText());
                     int MCID = Integer.parseInt(txtMCID.getText());
                     String betaald;
@@ -475,17 +481,22 @@ public class GUI_Form {
                     } else{
                         betaald = "N";
                     }
-                    //if ()
-                    ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
-                    ps.setInt(1, gastID);
-                    ps.setInt(2, MCID);
-                    ps.setString(3, betaald);
-                    ps.executeUpdate();
+                    while(rs2.next() && rs.next()) {
+                        if (rs.getInt("rating") < rs2.getInt("minRating")) {
+                            statusMasterclassTextField.setText("De gast heeft niet de vereiste minimale rating behaald!");
+                        } else {
+                            ps = ConnectionManager.getConnection().prepareStatement(insertMcInschrijving);
+                            ps.setInt(1, gastID);
+                            ps.setInt(2, MCID);
+                            ps.setString(3, betaald);
+                            ps.executeUpdate();
 
+                            statusMasterclassTextField.setText("Inschrijving gelukt!");
+                        }
+                    }
                     txtGastID.setText("");
                     txtMCID.setText("");
                     betaaldCheckBox.setSelected(false);
-                    statusMasterclassTextField.setText("Inschrijving gelukt!");
                 }
                 catch (SQLException ex){
                     statusMasterclassTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn..");
