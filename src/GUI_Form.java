@@ -384,6 +384,14 @@ public class GUI_Form {
                     ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
 
                     int GastID = Integer.parseInt(txtIdGast.getText());
+                    Statement st3 = con.createStatement();
+                    ResultSet rs3 = st3.executeQuery("SELECT rating FROM gast WHERE idgast = " + GastID);
+
+                    int tempRating = 0;
+                    if(rs3.next()){
+                        tempRating = Integer.parseInt(rs3.getString("rating"));
+                    }
+
                     int toernooiID = Integer.parseInt(txtToernooiID.getText());
                     String betaald;
                     if (betaaldToernooiCheckBox.isSelected()){
@@ -391,7 +399,7 @@ public class GUI_Form {
                     } else {
                         betaald = "N";
                     }
-                    while(rs2.next() & rs.next()) {
+                    while(rs2.next() && rs.next()) {
                         if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
                             textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
                         } else {
@@ -399,6 +407,10 @@ public class GUI_Form {
                             ps.setInt(1, GastID);
                             ps.setInt(2, toernooiID);
                             ps.setString(3, betaald);
+                            ps.executeUpdate();
+
+                            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET rating = ? WHERE idgast = " + GastID);
+                            ps.setInt(1, tempRating + 10);
                             ps.executeUpdate();
                         }
                     }
