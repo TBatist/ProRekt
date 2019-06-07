@@ -5,6 +5,8 @@ import java.util.Collections;
 public class Toernooi {
     private static ArrayList<Integer> gastenLijst = new ArrayList<>();
     private static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
+    private static ArrayList<Integer> tafelWinnaars = new ArrayList<>();
+    private static ArrayList<Integer[]> rondeTafels = new ArrayList<>();
     private static PreparedStatement ps;
 
     public static void tafelsMaken(int idToernooi) {
@@ -34,6 +36,66 @@ public class Toernooi {
             }
 
         } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void rondeIndeling(int idToernooi){
+        try {
+            Connection con = ConnectionManager.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select winnaar from Tafel where idtoernooi " + idToernooi);
+            while (rs.next()) {
+                tafelWinnaars.add(rs.getInt(1));
+            }
+
+            Collections.shuffle(tafelWinnaars);
+            Collections.shuffle(tafelWinnaars);
+            Collections.shuffle(tafelWinnaars);
+
+
+            int tafelNummer = -1;
+            int stoelNum = 0;
+
+            for (int i = 0; i < tafelWinnaars.size(); i++) {
+                if (i % 5 == 0) {
+                    rondeTafels.add(new Integer[5]);
+                    tafelNummer++;
+                }
+                rondeTafels.get(tafelNummer)[stoelNum] = tafelWinnaars.get(i);
+                stoelNum++;
+                if(stoelNum == 5){stoelNum = 0;}
+            }
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void rondeIndelingToevoegen(int idToernooi){
+        try{
+            Connection con = ConnectionManager.getConnection();
+            Statement st = con.createStatement();
+            //ResultSet rs = st.executeQuery("select * from tafelgasten");
+
+            int gastNummer = 0;
+            int tafelNummer = 0;
+
+            for (int i = 0; i < tafelWinnaars.size(); i++) {
+                while(gastNummer < tafelWinnaars.size()){
+                    ps = ConnectionManager.getConnection().prepareStatement("UPDATE tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?"); //nieuwe query
+                    ps.setInt(1, idToernooi);
+                    ps.setInt(2, tafelWinnaars.get(gastNummer));
+                    if(gastNummer % 4 == 0 && gastNummer != 0)
+                        tafelNummer++;
+                    ps.setInt(3, tafelNummer);
+                    gastNummer++;
+                    ps.executeUpdate();
+                }
+
+
+            }
+        } catch (SQLException exception){
             exception.printStackTrace();
         }
     }
@@ -125,7 +187,8 @@ public class Toernooi {
     }
 
     public static void main(String[] args) {
-        ratingSysteem(1);
-
+        rondeIndeling(1);
+        rondeIndelingToevoegen(1);
+            System.out.println(tafelWinnaars.get(0));
         }
     }

@@ -127,6 +127,7 @@ public class GUI_Form {
     private JList listMasterclassNaamGast;
     private JButton beëindigToernooiButton;
     private JList listPrijsgeld;
+    private JButton volgendeRondeButton;
     private JButton zetWinnaarButton;
 
     private PreparedStatement ps;
@@ -698,6 +699,15 @@ public class GUI_Form {
             public void actionPerformed(ActionEvent e) {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
                 Toernooi.prijzenGeldVerdeling(idToernooi);
+            }
+        });
+        volgendeRondeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
+                Toernooi.prijzenGeldVerdeling(idToernooi);
+                Toernooi.rondeIndeling(idToernooi);
+                Toernooi.rondeIndelingToevoegen(idToernooi);
                 Toernooi.ratingSysteem(idToernooi);
             }
         });
