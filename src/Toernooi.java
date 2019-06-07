@@ -125,8 +125,11 @@ public class Toernooi {
                 ps.setInt(4, rondeNummer);
                 gastNummer++;
                 ps.executeUpdate();
-                ps = ConnectionManager.getConnection().prepareStatement("INSERT Tafel SET idronde = ? WHERE idtoernooi = " +  idToernooi);
+                ps = ConnectionManager.getConnection().prepareStatement("INSERT INTO tafelgasten (ronde, idtoernooi, idtafel, idgast) values (?,?,?,?) ");
                 ps.setInt(1, rondeNummer);
+                ps.setInt(2, idToernooi);
+                ps.setInt(3, tafelNummer);
+                ps.setInt(4, gastenLijst.get(gastNummer));
                 ps.executeUpdate();
             }
 

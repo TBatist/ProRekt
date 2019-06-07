@@ -864,36 +864,20 @@
                   </grid>
                 </children>
               </scrollpane>
-              <component id="c0d91" class="javax.swing.JButton" binding="indelingMakenButton" default-binding="true">
-                <constraints>
-                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Indeling maken"/>
-                </properties>
-              </component>
-              <component id="4542a" class="javax.swing.JButton" binding="beëindigToernooiButton" default-binding="true">
-                <constraints>
-                  <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Beëindig toernooi"/>
-                </properties>
-              </component>
               <component id="d0a23" class="javax.swing.JButton" binding="zetWinnaarButton" default-binding="true">
                 <constraints>
-                  <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="Zet winnaar"/>
                 </properties>
               </component>
-              <component id="150c5" class="javax.swing.JButton" binding="volgendeRondeButton">
+              <component id="4542a" class="javax.swing.JButton" binding="beëindigToernooiButton" default-binding="true">
                 <constraints>
                   <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Volgende ronde"/>
+                  <text value="Beëindig toernooi"/>
                 </properties>
               </component>
             </children>

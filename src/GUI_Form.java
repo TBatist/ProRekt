@@ -127,7 +127,6 @@ public class GUI_Form {
     private JList listMasterclassNaamGast;
     private JButton beëindigToernooiButton;
     private JList listPrijsgeld;
-    private JButton volgendeRondeButton;
     private JButton zetWinnaarButton;
     private JTextField locatieTxt;
 
