@@ -79,16 +79,21 @@ public class Toernooi {
         try{
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select (count(idGast) * inleg) from inschrijvingtoernooi I join toernooi T on I.idToernooi = T.idToernooi where I.idToernooi = " + idToernooi);
-            int totaleInleg;
-            Double eerstePrijs;
-            Double tweedePrijs;
+            ResultSet rs = st.executeQuery("select (count(idGast) * inleg), winnaar, tweedePlek from inschrijvingtoernooi I join toernooi T on I.idToernooi = T.idToernooi where I.idToernooi = " + idToernooi);
+            int totaleInleg = rs.getInt(1);
+            int winnaarID = rs.getInt(2);
+            int tweedePlekID = rs.getInt(3);
+            Double eerstePrijs = (totaleInleg * 0.4);
+            Double tweedePrijs = (totaleInleg * 0.25);
+
+            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = '"+ eerstePrijs +"' WHERE idgast = " + winnaarID);
+            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET prijzenGeld = '"+ tweedePrijs +"' WHERE idgast = " + tweedePlekID);
+            ps.executeUpdate();
 
         } catch(SQLException exception){exception.printStackTrace();}
     }
 
     public static void main(String[] args) {
-
 
         }
     }
