@@ -132,6 +132,7 @@ public class GUI_Form {
     private JTextField locatieTxt;
 
     private PreparedStatement ps;
+    Masterclass mc = new Masterclass();
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
     private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum, locatie) VALUES(?,?,?,?,?,?,?,?)";
     private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating, geverMasterclass) VALUES (?,?,?,?,?,?)";
@@ -267,28 +268,16 @@ public class GUI_Form {
                 int minRating = Integer.parseInt(textMinratingMC.getText());
                 int BekendeSpelerID = Integer.parseInt(BGastIDtxt.getText());
 
-                try{
-                    ps = ConnectionManager.getConnection().prepareStatement(insertMC);
-                    ps.setDate(1, datum);
-                    ps.setTime(2, beginTijd);
-                    ps.setTime(3, eindTijd);
-                    ps.setDouble(4, prijs);
-                    ps.setInt(5, minRating);
-                    ps.setInt(6, BekendeSpelerID);
-
-                    ps.executeUpdate();
+                if(mc.GastAllowed(BekendeSpelerID) == true){
+                    mc.registMC(datum, beginTijd, eindTijd, prijs, minRating, BekendeSpelerID);
+                }
 
                     textDatumMC.setText("");
                     textBeginMC.setText("");
                     textEindMC.setText("");
                     textPrijsMC.setText("");
                     textMinratingMC.setText("");
-
                     textResultMC.setText("De masterclass op " + datum + " is toegevoegd aan de database.");
-
-                } catch(SQLException exception){
-                    exception.printStackTrace();
-                }
 
             }
         });
@@ -360,60 +349,120 @@ public class GUI_Form {
             }
         });
 
-        registrerenToernooiButton.addActionListener(new ActionListener() {
+
+        zoekButtonEvent.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try{
-                    Connection con = ConnectionManager.getConnection();
-                    Statement st = con.createStatement();
-                    ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi");
+                DefaultListModel modelGastID = new DefaultListModel();
+                DefaultListModel modelEventID = new DefaultListModel();
+                DefaultListModel modelBetaald = new DefaultListModel();
 
-                    Statement st2 = con.createStatement();
-                    ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
+                listGastID.setModel(modelGastID);
+                listEventID.setModel(modelEventID);
+                listBetaald.setModel(modelBetaald);
 
-                    int GastID = Integer.parseInt(txtIdGast.getText());
-                    Statement st3 = con.createStatement();
-                    ResultSet rs3 = st3.executeQuery("SELECT rating FROM gast WHERE idgast = " + GastID);
+                int eventID = Integer.parseInt(IDtextfield.getText());
 
-                    int tempRating = 0;
-                    if(rs3.next()){
-                        tempRating = Integer.parseInt(rs3.getString("rating"));
-                    }
+                if (deelnemersToernooiRadioButton.isSelected()){
+                    try {
+                        Connection con = ConnectionManager.getConnection();
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery("SELECT * FROM inschrijvingtoernooi WHERE idToernooi = " + eventID);
 
-                    int toernooiID = Integer.parseInt(txtToernooiID.getText());
-                    String betaald;
-                    if (betaaldToernooiCheckBox.isSelected()){
-                        betaald = "J";
-                    } else {
-                        betaald = "N";
-                    }
-                    while(rs2.next() && rs.next()) {
-                        if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
-                            textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
-                        } else {
-                            ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
-                            ps.setInt(1, GastID);
-                            ps.setInt(2, toernooiID);
-                            ps.setString(3, betaald);
-                            ps.executeUpdate();
+                        while (rs.next()){
+                            int ID = rs.getInt("idGast");
+                            int idToernooi = rs.getInt("idToernooi");
+                            String betaald = rs.getString("betaald");
 
-                            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET rating = ? WHERE idgast = " + GastID);
-                            ps.setInt(1, tempRating + 10);
-                            ps.executeUpdate();
+                            modelGastID.addElement(ID);
+                            modelEventID.addElement(idToernooi);
+                            modelBetaald.addElement(betaald);
                         }
+
+                    } catch (SQLException e1) {
+                          e1.printStackTrace();
                     }
-                    txtIdGast.setText("");
-                    txtToernooiID.setText("");
-                    betaaldToernooiCheckBox.setSelected(false);
-                    statusTextField.setText("Inschrijving gelukt!");
 
-                } catch (SQLException exc) {
-                    statusTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn.");
-                    exc.printStackTrace();
 
+                    }
+                if (deelnemersMasterclassRadioButton.isSelected()) {
+                    try {
+                        Connection con = ConnectionManager.getConnection();
+                        Statement st = con.createStatement();
+                        ResultSet rs = st.executeQuery("SELECT * FROM InschrijvingMasterclass WHERE idmc = " + eventID);
+
+                        while (rs.next()) {
+                            int ID = rs.getInt("idGast");
+                            int idmc = rs.getInt("idmc");
+                            String betaald = rs.getString("betaald");
+
+                            modelGastID.addElement(ID);
+                            modelEventID.addElement(idmc);
+                            modelBetaald.addElement(betaald);
+                        }
+
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
                 }
+
             }
         });
+
+                registrerenToernooiButton.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            Connection con = ConnectionManager.getConnection();
+                            Statement st = con.createStatement();
+                            ResultSet rs = st.executeQuery("SELECT maxInschrijvingen FROM toernooi");
+
+                            Statement st2 = con.createStatement();
+                            ResultSet rs2 = st2.executeQuery("SELECT COUNT(idGast) as totaal FROM inschrijvingtoernooi WHERE idToernooi = " + Integer.parseInt(txtToernooiID.getText()));
+
+                            int GastID = Integer.parseInt(txtIdGast.getText());
+                            Statement st3 = con.createStatement();
+                            ResultSet rs3 = st3.executeQuery("SELECT rating FROM gast WHERE idgast = " + GastID);
+
+                            int tempRating = 0;
+                            if (rs3.next()) {
+                                tempRating = Integer.parseInt(rs3.getString("rating"));
+                            }
+
+                            int toernooiID = Integer.parseInt(txtToernooiID.getText());
+                            String betaald;
+                            if (betaaldToernooiCheckBox.isSelected()) {
+                                betaald = "J";
+                            } else {
+                                betaald = "N";
+                            }
+                            while (rs2.next() && rs.next()) {
+                                if (Integer.parseInt(rs2.getString("totaal")) >= Integer.parseInt(rs.getString("maxInschrijvingen"))) {
+                                    textResultT.setText("De limiet van gasten is voor dit toernooi bereikt");
+                                } else {
+                                    ps = ConnectionManager.getConnection().prepareStatement(insertToernooiInschrijving);
+                                    ps.setInt(1, GastID);
+                                    ps.setInt(2, toernooiID);
+                                    ps.setString(3, betaald);
+                                    ps.executeUpdate();
+
+                                    ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET rating = ? WHERE idgast = " + GastID);
+                                    ps.setInt(1, tempRating + 10);
+                                    ps.executeUpdate();
+                                }
+                            }
+                            txtIdGast.setText("");
+                            txtToernooiID.setText("");
+                            betaaldToernooiCheckBox.setSelected(false);
+                            statusTextField.setText("Inschrijving gelukt!");
+
+                        } catch (SQLException exc) {
+                            statusTextField.setText("Inschrijving mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn.");
+                            exc.printStackTrace();
+
+                        }
+                    }
+                });
         masterclassRegist.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

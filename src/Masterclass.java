@@ -20,12 +20,7 @@ public class Masterclass {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (JaNee.equals("J")) {
-            return true;
-        }
-        else{
-            return false;
-        }
+        return JaNee.equals("J");
 
 
     }
