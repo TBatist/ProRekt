@@ -782,7 +782,7 @@ public class GUI_Form {
                 Toernooi.prijzenGeldVerdeling(idToernooi);
             }
         });
-/*        volgendeRondeButton.addActionListener(new ActionListener() {
+        /*volgendeRondeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());

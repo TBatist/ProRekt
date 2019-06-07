@@ -216,6 +216,291 @@
               </component>
             </children>
           </grid>
+          <grid id="ef7e1" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+            <margin top="0" left="0" bottom="0" right="0"/>
+            <constraints>
+              <tabbedpane title="Profiel zoeken"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="19520" class="javax.swing.JTextField" binding="textZoekG">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <text value=""/>
+                  <toolTipText value="Zoek op naam"/>
+                </properties>
+              </component>
+              <component id="2e017" class="javax.swing.JButton" binding="buttonZoekG">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Zoek"/>
+                </properties>
+              </component>
+              <component id="52b8f" class="javax.swing.JButton" binding="wijzigGastButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Wijzig gast"/>
+                </properties>
+              </component>
+              <component id="ad48b" class="javax.swing.JButton" binding="verwijderButton" default-binding="true">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Verwijder"/>
+                </properties>
+              </component>
+              <scrollpane id="388c7" binding="scrollPaneGast">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <grid id="3de5b" layout-manager="GridLayoutManager" row-count="2" column-count="12" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+                    <margin top="0" left="0" bottom="0" right="0"/>
+                    <constraints/>
+                    <properties/>
+                    <border type="none"/>
+                    <children>
+                      <component id="db84a" class="javax.swing.JList" binding="listGastId">
+                        <constraints>
+                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="30" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <model/>
+                        </properties>
+                      </component>
+                      <component id="8957b" class="javax.swing.JList" binding="listGastNaam">
+                        <constraints>
+                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                          <model/>
+                        </properties>
+                      </component>
+                      <component id="deed2" class="javax.swing.JList" binding="listGastAdres">
+                        <constraints>
+                          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="640d3" class="javax.swing.JList" binding="listGastPostcode">
+                        <constraints>
+                          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="756c0" class="javax.swing.JList" binding="listGastWoonplaats">
+                        <constraints>
+                          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="1a83b" class="javax.swing.JList" binding="listGastTelnr">
+                        <constraints>
+                          <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="e8c6f" class="javax.swing.JList" binding="listGastEmail">
+                        <constraints>
+                          <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="34a9" class="javax.swing.JList" binding="listGastGebdatum">
+                        <constraints>
+                          <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="9d52d" class="javax.swing.JList" binding="listGastGeslacht">
+                        <constraints>
+                          <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="10" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="d5c6e" class="javax.swing.JList" binding="listGastRating">
+                        <constraints>
+                          <grid row="1" column="9" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="20" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="bf9f6" class="javax.swing.JList" binding="listGastBekspeler">
+                        <constraints>
+                          <grid row="1" column="11" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="10" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="4a398" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                            <preferred-size width="30" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <text value="ID"/>
+                        </properties>
+                      </component>
+                      <component id="133e1" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <text value="Naam"/>
+                        </properties>
+                      </component>
+                      <component id="616a7" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+                            <preferred-size width="50" height="-1"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <text value="Adres"/>
+                        </properties>
+                      </component>
+                      <component id="6dad3" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Postcode"/>
+                        </properties>
+                      </component>
+                      <component id="f2a49" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Woonplaats"/>
+                        </properties>
+                      </component>
+                      <component id="272d1" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Telefoonnummer"/>
+                        </properties>
+                      </component>
+                      <component id="2ffa7" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Email"/>
+                        </properties>
+                      </component>
+                      <component id="c6b95" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Geboortedatum"/>
+                        </properties>
+                      </component>
+                      <component id="c3a90" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Bekende speler"/>
+                        </properties>
+                      </component>
+                      <component id="b4055" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Rating"/>
+                        </properties>
+                      </component>
+                      <component id="45d03" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Geslacht"/>
+                        </properties>
+                      </component>
+                      <component id="389ce" class="javax.swing.JList" binding="listPrijsgeld">
+                        <constraints>
+                          <grid row="1" column="10" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
+                            <preferred-size width="150" height="50"/>
+                          </grid>
+                        </constraints>
+                        <properties>
+                          <enabled value="false"/>
+                        </properties>
+                      </component>
+                      <component id="c1bfe" class="javax.swing.JLabel">
+                        <constraints>
+                          <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                        </constraints>
+                        <properties>
+                          <text value="Prijzengeld"/>
+                        </properties>
+                      </component>
+                    </children>
+                  </grid>
+                </children>
+              </scrollpane>
+            </children>
+          </grid>
           <grid id="52d36" layout-manager="GridLayoutManager" row-count="10" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
@@ -605,289 +890,85 @@
               </component>
             </children>
           </grid>
-          <grid id="ef7e1" layout-manager="GridLayoutManager" row-count="2" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="c6fc8" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
-              <tabbedpane title="Profiel zoeken"/>
+              <tabbedpane title="Inschrijven Toernooi"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="19520" class="javax.swing.JTextField" binding="textZoekG">
+              <hspacer id="728b5">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </hspacer>
+              <vspacer id="ded68">
+                <constraints>
+                  <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                </constraints>
+              </vspacer>
+              <component id="17dc5" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Gast ID:"/>
+                </properties>
+              </component>
+              <component id="88d00" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                </constraints>
+                <properties>
+                  <text value="Toernooi ID:"/>
+                </properties>
+              </component>
+              <component id="ce530" class="javax.swing.JTextField" binding="txtToernooiID">
+                <constraints>
+                  <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
+                </constraints>
+                <properties/>
+              </component>
+              <component id="90db0" class="javax.swing.JTextField" binding="txtIdGast">
+                <constraints>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
                   <text value=""/>
-                  <toolTipText value="Zoek op naam"/>
                 </properties>
               </component>
-              <component id="2e017" class="javax.swing.JButton" binding="buttonZoekG">
+              <component id="ce1d2" class="javax.swing.JCheckBox" binding="betaaldToernooiCheckBox">
                 <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Zoek"/>
+                  <text value="Betaald"/>
                 </properties>
               </component>
-              <component id="52b8f" class="javax.swing.JButton" binding="wijzigGastButton" default-binding="true">
+              <component id="7704e" class="javax.swing.JButton" binding="registrerenToernooiButton">
                 <constraints>
-                  <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Wijzig gast"/>
+                  <text value="Registreren"/>
                 </properties>
               </component>
-              <component id="ad48b" class="javax.swing.JButton" binding="verwijderButton" default-binding="true">
+              <component id="1f356" class="javax.swing.JTextField" binding="statusTextField">
                 <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Verwijder"/>
-                </properties>
-              </component>
-              <scrollpane id="388c7" binding="scrollPaneGast">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="4" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <grid id="3de5b" layout-manager="GridLayoutManager" row-count="2" column-count="12" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-                    <margin top="0" left="0" bottom="0" right="0"/>
-                    <constraints/>
-                    <properties/>
-                    <border type="none"/>
-                    <children>
-                      <component id="db84a" class="javax.swing.JList" binding="listGastId">
-                        <constraints>
-                          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="30" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <model/>
-                        </properties>
-                      </component>
-                      <component id="8957b" class="javax.swing.JList" binding="listGastNaam">
-                        <constraints>
-                          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                          <model/>
-                        </properties>
-                      </component>
-                      <component id="deed2" class="javax.swing.JList" binding="listGastAdres">
-                        <constraints>
-                          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="640d3" class="javax.swing.JList" binding="listGastPostcode">
-                        <constraints>
-                          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="756c0" class="javax.swing.JList" binding="listGastWoonplaats">
-                        <constraints>
-                          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="1a83b" class="javax.swing.JList" binding="listGastTelnr">
-                        <constraints>
-                          <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="e8c6f" class="javax.swing.JList" binding="listGastEmail">
-                        <constraints>
-                          <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="34a9" class="javax.swing.JList" binding="listGastGebdatum">
-                        <constraints>
-                          <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="9d52d" class="javax.swing.JList" binding="listGastGeslacht">
-                        <constraints>
-                          <grid row="1" column="8" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="10" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="d5c6e" class="javax.swing.JList" binding="listGastRating">
-                        <constraints>
-                          <grid row="1" column="9" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="20" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="bf9f6" class="javax.swing.JList" binding="listGastBekspeler">
-                        <constraints>
-                          <grid row="1" column="11" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="10" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="4a398" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="30" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <text value="ID"/>
-                        </properties>
-                      </component>
-                      <component id="133e1" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <text value="Naam"/>
-                        </properties>
-                      </component>
-                      <component id="616a7" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-                            <preferred-size width="50" height="-1"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <text value="Adres"/>
-                        </properties>
-                      </component>
-                      <component id="6dad3" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Postcode"/>
-                        </properties>
-                      </component>
-                      <component id="f2a49" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Woonplaats"/>
-                        </properties>
-                      </component>
-                      <component id="272d1" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Telefoonnummer"/>
-                        </properties>
-                      </component>
-                      <component id="2ffa7" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Email"/>
-                        </properties>
-                      </component>
-                      <component id="c6b95" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Geboortedatum"/>
-                        </properties>
-                      </component>
-                      <component id="c3a90" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="11" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Bekende speler"/>
-                        </properties>
-                      </component>
-                      <component id="b4055" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="9" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Rating"/>
-                        </properties>
-                      </component>
-                      <component id="45d03" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="8" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Geslacht"/>
-                        </properties>
-                      </component>
-                      <component id="389ce" class="javax.swing.JList" binding="listPrijsgeld">
-                        <constraints>
-                          <grid row="1" column="10" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                            <preferred-size width="150" height="50"/>
-                          </grid>
-                        </constraints>
-                        <properties>
-                          <enabled value="false"/>
-                        </properties>
-                      </component>
-                      <component id="c1bfe" class="javax.swing.JLabel">
-                        <constraints>
-                          <grid row="0" column="10" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                        </constraints>
-                        <properties>
-                          <text value="Prijzengeld"/>
-                        </properties>
-                      </component>
-                    </children>
+                  <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
                   </grid>
-                </children>
-              </scrollpane>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <text value=""/>
+                </properties>
+              </component>
             </children>
           </grid>
           <grid id="bfeab" layout-manager="GridLayoutManager" row-count="8" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -1297,87 +1378,6 @@
               </component>
             </children>
           </grid>
-          <grid id="c6fc8" layout-manager="GridLayoutManager" row-count="6" column-count="4" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <tabbedpane title="Inschrijven Toernooi"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <hspacer id="728b5">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="3" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
-              <vspacer id="ded68">
-                <constraints>
-                  <grid row="1" column="0" row-span="2" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <component id="17dc5" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Gast ID:"/>
-                </properties>
-              </component>
-              <component id="88d00" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Toernooi ID:"/>
-                </properties>
-              </component>
-              <component id="ce530" class="javax.swing.JTextField" binding="txtToernooiID">
-                <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties/>
-              </component>
-              <component id="90db0" class="javax.swing.JTextField" binding="txtIdGast">
-                <constraints>
-                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <text value=""/>
-                </properties>
-              </component>
-              <component id="ce1d2" class="javax.swing.JCheckBox" binding="betaaldToernooiCheckBox">
-                <constraints>
-                  <grid row="3" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Betaald"/>
-                </properties>
-              </component>
-              <component id="7704e" class="javax.swing.JButton" binding="registrerenToernooiButton">
-                <constraints>
-                  <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <text value="Registreren"/>
-                </properties>
-              </component>
-              <component id="1f356" class="javax.swing.JTextField" binding="statusTextField">
-                <constraints>
-                  <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                    <preferred-size width="150" height="-1"/>
-                  </grid>
-                </constraints>
-                <properties>
-                  <editable value="false"/>
-                  <text value=""/>
-                </properties>
-              </component>
-            </children>
-          </grid>
           <grid id="2ec31" layout-manager="GridLayoutManager" row-count="4" column-count="9" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
@@ -1502,31 +1502,6 @@
                   <text value="Gast ID"/>
                 </properties>
               </component>
-            </children>
-          </grid>
-          <grid id="1ea92" layout-manager="GridLayoutManager" row-count="2" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
-            <margin top="0" left="0" bottom="0" right="0"/>
-            <constraints>
-              <tabbedpane title="Untitled"/>
-            </constraints>
-            <properties/>
-            <border type="none"/>
-            <children>
-              <vspacer id="25581">
-                <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
-              <hspacer id="acca3">
-                <constraints>
-                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </hspacer>
-              <vspacer id="74571">
-                <constraints>
-                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                </constraints>
-              </vspacer>
             </children>
           </grid>
         </children>
