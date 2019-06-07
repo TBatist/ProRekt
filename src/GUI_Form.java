@@ -209,6 +209,7 @@ public class GUI_Form {
 
                         textResultG.setText(naam + " is toegevoegd aan de database.");
                     } catch (SQLException exception){
+                        textResultG.setText("Registratie mislukt, controleer of alles goed is ingevuld en/of er geen dubbele gegevens ingevoerd zijn.");
                         exception.printStackTrace();
                     }
                 }
@@ -780,6 +781,7 @@ public class GUI_Form {
             public void actionPerformed(ActionEvent e) {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
                 Toernooi.prijzenGeldVerdeling(idToernooi);
+                Toernooi.ratingSysteem(idToernooi);
             }
         });
         /*volgendeRondeButton.addActionListener(new ActionListener() {
@@ -831,7 +833,7 @@ public class GUI_Form {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Full House");
         frame.setContentPane(new GUI_Form().panel);
-        frame.setSize(1300,500);
+        frame.setSize(1600,500);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }

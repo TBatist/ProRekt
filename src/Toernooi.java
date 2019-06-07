@@ -4,7 +4,7 @@ import java.util.Collections;
 
 public class Toernooi {
     private static ArrayList<Integer> gastenLijst = new ArrayList<>();
-    private static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
+    private static ArrayList<Integer[]> tafelLijst = new ArrayList<>();
     private static ArrayList<Integer> tafelWinnaars = new ArrayList<>();
     private static ArrayList<Integer[]> rondeTafels = new ArrayList<>();
     private static PreparedStatement ps;
