@@ -767,14 +767,14 @@ public class GUI_Form {
 
             }
         });
-        indelingMakenButton.addActionListener(new ActionListener() {
+/*        indelingMakenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
                 Toernooi.tafelsMaken(idToernooi);
                 Toernooi.toevoegenDatabase(idToernooi);
             }
-        });
+        });*/
         beëindigToernooiButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
