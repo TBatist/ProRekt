@@ -44,7 +44,7 @@ public class Toernooi {
         try {
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select winnaar from Tafel where idtoernooi " + idToernooi);
+            ResultSet rs = st.executeQuery("select winnaar from Tafel where idtoernooi = " + idToernooi);
             while (rs.next()) {
                 tafelWinnaars.add(rs.getInt(1));
             }
@@ -189,6 +189,6 @@ public class Toernooi {
     public static void main(String[] args) {
         rondeIndeling(1);
         rondeIndelingToevoegen(1);
-            System.out.println(tafelWinnaars.get(0));
+            //System.out.println(tafelWinnaars.get(0));
         }
     }
