@@ -126,6 +126,7 @@ public class GUI_Form {
     private JButton wijzigButtonMC;
     private JList listMasterclassNaamGast;
     private JButton beëindigToernooiButton;
+    private JList listPrijsgeld;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -285,26 +286,6 @@ public class GUI_Form {
 
             }
         });
-
-
-
-//todo
-        /*public boolean GastAllowed (int BGastID) {
-            String YesNo = "";
-            try {
-                ps = ConnectionManager.getConnection().prepareStatement("SELECT bekspeler FROM gast WHERE idgast = " + BGastID);
-                ResultSet rs = ps.executeQuery();
-                YesNo = rs.getString("bekspeler");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            if (YesNo == "Y") {
-
-            }
-            else{
-
-            }
-        }*/
 
         buttonZoekT.addActionListener(new ActionListener() {
             @Override
@@ -477,6 +458,7 @@ public class GUI_Form {
                     DefaultListModel modelGeslacht = new DefaultListModel();
                     DefaultListModel modelRating = new DefaultListModel();
                     DefaultListModel modelBekspeler = new DefaultListModel();
+                    DefaultListModel modelPrijzengeld = new DefaultListModel();
 
                     listGastId.setModel(modelId);
                     listGastNaam.setModel(modelNaam);
@@ -489,6 +471,7 @@ public class GUI_Form {
                     listGastGeslacht.setModel(modelGeslacht);
                     listGastRating.setModel(modelRating);
                     listGastBekspeler.setModel(modelBekspeler);
+                    listPrijsgeld.setModel(modelPrijzengeld);
 
 
                     while(rs.next()){
@@ -503,6 +486,7 @@ public class GUI_Form {
                         String geslacht = rs.getString("geslacht");
                         String rating = rs.getString("rating");
                         String bekspeler = rs.getString("bekspeler");
+                        double prijzengeld = rs.getDouble("prijzenGeld");
 
                         modelId.addElement(id);
                         modelNaam.addElement(naam);
@@ -515,6 +499,7 @@ public class GUI_Form {
                         modelGeslacht.addElement(geslacht);
                         modelRating.addElement(rating);
                         modelBekspeler.addElement(bekspeler);
+                        modelPrijzengeld.addElement(prijzengeld);
 
                     }
 
