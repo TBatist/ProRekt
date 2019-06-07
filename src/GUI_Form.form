@@ -1526,5 +1526,10 @@
       <member id="7d950"/>
       <member id="68b7f"/>
     </group>
+    <group name="buttonGroupEventSelect">
+      <member id="2dfcf"/>
+      <member id="2dfcf"/>
+      <member id="3c463"/>
+    </group>
   </buttonGroups>
 </form>
