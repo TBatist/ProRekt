@@ -8,6 +8,7 @@ public class Toernooi {
     private static ArrayList<Integer> tafelWinnaars = new ArrayList<>();
     private static ArrayList<Integer[]> rondeTafels = new ArrayList<>();
     private static PreparedStatement ps;
+    private static int rondeNummer = 1;
 
     public static void tafelsMaken(int idToernooi) {
         try {
@@ -83,16 +84,20 @@ public class Toernooi {
 
             for (int i = 0; i < tafelWinnaars.size(); i++) {
                 while(gastNummer < tafelWinnaars.size()){
-                    ps = ConnectionManager.getConnection().prepareStatement("UPDATE tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?"); //nieuwe query
+                    ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?, ronde = ?"); //nieuwe query
                     ps.setInt(1, idToernooi);
                     ps.setInt(2, tafelWinnaars.get(gastNummer));
                     if(gastNummer % 4 == 0 && gastNummer != 0)
                         tafelNummer++;
                     ps.setInt(3, tafelNummer);
+                    ps.setInt(4, rondeNummer);
                     gastNummer++;
                     ps.executeUpdate();
                 }
-
+                ps = ConnectionManager.getConnection().prepareStatement("UPDATE Tafel SET idronde = ? WHERE idtoernooi = " +  idToernooi);
+                ps.setInt(1, rondeNummer);
+                ps.executeUpdate();
+                rondeNummer++;
 
             }
         } catch (SQLException exception){
@@ -111,16 +116,21 @@ public class Toernooi {
 
             for (int i = 0; i < gastenLijst.size(); i++) {
             while(gastNummer < gastenLijst.size()){
-                ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?");
+                ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?, ronde = ?");
                 ps.setInt(1, idToernooi);
                 ps.setInt(2, gastenLijst.get(gastNummer));
                 if(gastNummer % 4 == 0 && gastNummer != 0)
                     tafelNummer++;
                 ps.setInt(3, tafelNummer);
+                ps.setInt(4, rondeNummer);
                 gastNummer++;
+                ps.executeUpdate();
+                ps = ConnectionManager.getConnection().prepareStatement("INSERT Tafel SET idronde = ? WHERE idtoernooi = " +  idToernooi);
+                ps.setInt(1, rondeNummer);
                 ps.executeUpdate();
             }
 
+            rondeNummer++;
 
             }
         } catch (SQLException exception){
