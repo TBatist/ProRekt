@@ -75,7 +75,7 @@ public class Toernooi {
         } catch(SQLException exception){exception.printStackTrace();}
     }
 
-    public void prijzenGeldVerdeling(int idToernooi){
+    public static void prijzenGeldVerdeling(int idToernooi){
         try{
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
