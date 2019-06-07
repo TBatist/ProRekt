@@ -129,10 +129,11 @@ public class GUI_Form {
     private JList listPrijsgeld;
     private JButton volgendeRondeButton;
     private JButton zetWinnaarButton;
+    private JTextField locatieTxt;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
-    private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum) VALUES(?,?,?,?,?,?,?)";
+    private String insertToernooi = "INSERT INTO toernooi (datum, begintijd, eindtijd, beschrijving, maxInschrijvingen, inleg, insdatum, locatie) VALUES(?,?,?,?,?,?,?,?)";
     private String insertMC = "INSERT INTO masterclass (datum, begin, eind, prijs, minRating, geverMasterclass) VALUES (?,?,?,?,?,?)";
     private String insertMcInschrijving = "INSERT INTO InschrijvingMasterclass (idGast, idmc, betaald) VALUES (?,?,?)";
     private String insertToernooiInschrijving = "INSERT INTO inschrijvingtoernooi (idGast, idToernooi, betaald) VALUES (?,?,?)";
@@ -223,6 +224,7 @@ public class GUI_Form {
                 int maxInschrijvingen = Integer.parseInt(textMaxinschrijvingenT.getText());
                 double inleggeld = Double.parseDouble(textInleggeldT.getText());
                 Date inschrijfdatum = Date.valueOf(textInschrijfdatumT.getText());
+                String locatie = locatieTxt.getText();
 
                 try{
                     ps = ConnectionManager.getConnection().prepareStatement(insertToernooi);
@@ -233,6 +235,7 @@ public class GUI_Form {
                     ps.setInt(5, maxInschrijvingen);
                     ps.setDouble(6, inleggeld);
                     ps.setDate(7, inschrijfdatum);
+                    ps.setString(8, locatie);
 
                     ps.executeUpdate();
 
@@ -243,6 +246,7 @@ public class GUI_Form {
                     textMaxinschrijvingenT.setText("");
                     textInleggeldT.setText("");
                     textInschrijfdatumT.setText("");
+                    locatieTxt.setText("");
 
                     textResultT.setText("Het toernooi op " + datum + " is toegevoegd aan de database.");
 
@@ -554,43 +558,70 @@ public class GUI_Form {
             public void actionPerformed(ActionEvent e) {
                 int idIndex = Integer.parseInt((String) listGastId.getSelectedValue());
                 JPanel optionPanel = new JPanel();
-                optionPanel.setLayout(new GridLayout(1,12));
+                optionPanel.setLayout(new GridLayout(13,2));
                 try{
                     Connection con = ConnectionManager.getConnection();
                     Statement st = con.createStatement();
                     ResultSet rs = st.executeQuery("SELECT * FROM gast WHERE idgast = " + idIndex + ";");
 
                     if(rs.next()) {
+
+                        JLabel idTxt = new JLabel ("ID gast");
                         JTextField id = new JTextField(rs.getString("idgast"));
                         int tempId = Integer.parseInt(id.getText());
+                        JLabel naamTxt = new JLabel("Naam");
                         JTextField naam = new JTextField(rs.getString("naam"));
+                        JLabel adresTxt = new JLabel("Adres");
                         JTextField adres = new JTextField(rs.getString("adres"));
+                        JLabel postcodeTxt = new JLabel("Postcode");
                         JTextField postcode = new JTextField(rs.getString("postcode"));
+                        JLabel woonplaatsTxt= new JLabel("Woonplaats");
                         JTextField woonplaats = new JTextField(rs.getString("woonplaats"));
+                        JLabel telnummerTxt = new JLabel("Telefoonnummer");
                         JTextField telnr = new JTextField(rs.getString("telnr"));
+                        JLabel emailTxt = new JLabel("E-mail adres");
                         JTextField email = new JTextField(rs.getString("email"));
+                        JLabel gebdatumTxt = new JLabel("Geboortedatum");
                         JTextField gebdatum = new JTextField(rs.getString("gebdatum"));
+                        JLabel geslachtTxt = new JLabel("Geslacht");
                         JTextField geslacht = new JTextField(rs.getString("geslacht"));
+                        JLabel ratingTxt = new JLabel("Rating");
                         JTextField rating = new JTextField(rs.getString("rating"));
+                        JLabel prijzengeldTxt = new JLabel("Prijzengeld");
+                        JTextField prijzengeld = new JTextField(rs.getString("prijzenGeld"));
+                        JLabel bekspelerTxt = new JLabel("Bekende speler");
                         JTextField bekspeler = new JTextField(rs.getString("bekspeler"));
 
+                        optionPanel.add(idTxt);
                         optionPanel.add(id);
+                        optionPanel.add(naamTxt);
                         optionPanel.add(naam);
+                        optionPanel.add(adresTxt);
                         optionPanel.add(adres);
+                        optionPanel.add(postcodeTxt);
                         optionPanel.add(postcode);
+                        optionPanel.add(woonplaatsTxt);
                         optionPanel.add(woonplaats);
+                        optionPanel.add(telnummerTxt);
                         optionPanel.add(telnr);
+                        optionPanel.add(emailTxt);
                         optionPanel.add(email);
+                        optionPanel.add(gebdatumTxt);
                         optionPanel.add(gebdatum);
+                        optionPanel.add(geslachtTxt);
                         optionPanel.add(geslacht);
+                        optionPanel.add(ratingTxt);
                         optionPanel.add(rating);
+                        optionPanel.add(prijzengeldTxt);
+                        optionPanel.add(prijzengeld);
+                        optionPanel.add(bekspelerTxt);
                         optionPanel.add(bekspeler);
 
                         int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
 
                         if (result == JOptionPane.OK_OPTION) {
                             try {
-                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET idgast = ?, naam = ?, adres = ?, postcode = ?, woonplaats = ?, telnr = ?, email = ?, gebdatum = ?, geslacht = ?, rating = ?, bekspeler = ? WHERE idgast = " + tempId + ";");
+                                ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET idgast = ?, naam = ?, adres = ?, postcode = ?, woonplaats = ?, telnr = ?, email = ?, gebdatum = ?, geslacht = ?, rating = ?, prijzenGeld = ?, bekspeler = ? WHERE idgast = " + tempId + ";");
                                 ps.setInt(1, Integer.parseInt(id.getText()));
                                 ps.setString(2, naam.getText());
                                 ps.setString(3,adres.getText());
@@ -601,7 +632,8 @@ public class GUI_Form {
                                 ps.setDate(8, Date.valueOf(gebdatum.getText()));
                                 ps.setString(9,geslacht.getText());
                                 ps.setInt(10, Integer.parseInt(rating.getText()));
-                                ps.setString(11, bekspeler.getText());
+                                ps.setDouble(11, Double.parseDouble(prijzengeld.getText()));
+                                ps.setString(12, bekspeler.getText());
                                 ps.executeUpdate();
                             } catch (SQLException exception) {
                                 exception.printStackTrace();
@@ -701,7 +733,7 @@ public class GUI_Form {
                 Toernooi.prijzenGeldVerdeling(idToernooi);
             }
         });
-        volgendeRondeButton.addActionListener(new ActionListener() {
+/*        volgendeRondeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
@@ -710,7 +742,7 @@ public class GUI_Form {
                 Toernooi.rondeIndelingToevoegen(idToernooi);
                 Toernooi.ratingSysteem(idToernooi);
             }
-        });
+        });*/
         zetWinnaarButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
