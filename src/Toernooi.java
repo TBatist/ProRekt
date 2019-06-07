@@ -133,7 +133,7 @@ public class Toernooi {
                 ps.executeUpdate();
             }
 
-            rondeNummer++;
+                rondeNummer++;
 
             }
         } catch (SQLException exception){
