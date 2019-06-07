@@ -70,18 +70,31 @@ public class Toernooi {
         try{
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT AVG(G.rating) as average FROM gast G JOIN tafelgasten T on G.idgast = T.idgast WHERE idtoernooi = " + idToernooi + "GROUP BY idtafel");
-            int avgRating = 0;
-            int tafel = 0;
+            ResultSet rs = st.executeQuery("SELECT AVG(G.rating) as average FROM gast G JOIN tafelgasten T on G.idgast = T.idgast WHERE idtoernooi = " + idToernooi + " GROUP BY idtafel");
+            int avgRating;
+            ArrayList<Integer> tafelAvg= new ArrayList<>();
             while(rs.next()){
                 avgRating = rs.getInt("average");
-                System.out.println(avgRating);
-                tafel++;
+                tafelAvg.add(avgRating);
             }
-            for(int i = 0; i < tafel; i++){
-
+            for(int i = 0; i < tafelAvg.size(); i++){
+                try{
+                    rs = st.executeQuery("SELECT G.rating, T.winnaar FROM gast G JOIN Tafel T ON G.idgast = T.TafelNummer WHERE idtoernooi = " + idToernooi + " AND TafelNummer = " + i);
+                    if(rs.next()){
+                        try{
+                            int rating = Integer.parseInt(rs.getString(1));
+                            int idgast = Integer.parseInt(rs.getString(2));
+                            if(rating < tafelAvg.get(i)){
+                                rating =+ tafelAvg.get(i) * 2;
+                            }else{
+                                rating =+ tafelAvg.get(i);
+                            }
+                            ps = ConnectionManager.getConnection().prepareStatement("UPDATE gast SET rating = " + rating + " WHERE idgast = " + idgast);
+                            ps.executeUpdate();
+                        }catch(SQLException exception){exception.printStackTrace();}
+                    }
+                }catch(SQLException exception){exception.printStackTrace();}
             }
-            int rating;
 
         } catch(SQLException exception){exception.printStackTrace();}
     }

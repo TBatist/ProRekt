@@ -127,6 +127,7 @@ public class GUI_Form {
     private JList listMasterclassNaamGast;
     private JButton beëindigToernooiButton;
     private JList listPrijsgeld;
+    private JButton zetWinnaarButton;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -697,6 +698,41 @@ public class GUI_Form {
             public void actionPerformed(ActionEvent e) {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
                 Toernooi.prijzenGeldVerdeling(idToernooi);
+                Toernooi.ratingSysteem(idToernooi);
+            }
+        });
+        zetWinnaarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idIndex = Integer.parseInt((String) listToernooiId.getSelectedValue());
+                JPanel optionPanel = new JPanel();
+                optionPanel.setLayout(new GridLayout(3,2));
+
+                JTextField ronde = new JTextField();
+                JTextField tafel = new JTextField();
+                JTextField winnaar = new JTextField();
+
+                optionPanel.add(new JLabel("Ronde:"));
+                optionPanel.add(ronde);
+                optionPanel.add(new JLabel("Tafel:"));
+                optionPanel.add(tafel);
+                optionPanel.add(new JLabel("Winnaar:"));
+                optionPanel.add(winnaar);
+
+                int result = JOptionPane.showConfirmDialog(null, optionPanel, "Wijzigen", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+                if(result == JOptionPane.OK_OPTION) {
+                    try {
+                        ps = ConnectionManager.getConnection().prepareStatement("INSERT INTO Tafel VALUES(?,?,?,?)");
+                        ps.setInt(1,Integer.parseInt(tafel.getText()));
+                        ps.setInt(2, idIndex);
+                        ps.setInt(3,Integer.parseInt(ronde.getText()));
+                        ps.setInt(4,Integer.parseInt(winnaar.getText()));
+                        ps.executeUpdate();
+                    } catch (SQLException exception) {
+                        exception.printStackTrace();
+                    }
+                }
+
             }
         });
     }
