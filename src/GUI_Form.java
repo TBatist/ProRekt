@@ -125,6 +125,7 @@ public class GUI_Form {
     private JButton zoekButtonEvent;
     private JButton wijzigButtonMC;
     private JList listMasterclassNaamGast;
+    private JButton beëindigToernooiButton;
 
     private PreparedStatement ps;
     private String insertGast = "INSERT INTO gast (naam, adres, postcode, woonplaats, telnr, email, gebdatum, geslacht, bekspeler) VALUES(?,?,?,?,?,?,?,?,?)";
@@ -692,6 +693,12 @@ public class GUI_Form {
                 int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
                 Toernooi.tafelsMaken();
                 Toernooi.toevoegenDatabase(idToernooi);
+            }
+        });
+        beëindigToernooiButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int idToernooi = Integer.parseInt((String) listToernooiId.getSelectedValue());
             }
         });
     }

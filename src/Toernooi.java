@@ -7,11 +7,11 @@ public class Toernooi {
     private static ArrayList<Integer[]> tafelLijst = new ArrayList<Integer[]>();
     private static PreparedStatement ps;
 
-    public static void tafelsMaken() {
+    public static void tafelsMaken(int idToernooi) {
         try {
             Connection con = ConnectionManager.getConnection();
             Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("select idGast as 'inschrijvingen' from inschrijvingtoernooi where idToernooi = 1");
+            ResultSet rs = st.executeQuery("select idGast as 'inschrijvingen' from inschrijvingtoernooi where idToernooi = " + idToernooi);
             while (rs.next()) {
                 gastenLijst.add(rs.getInt(1));
             }
@@ -47,6 +47,7 @@ public class Toernooi {
             int gastNummer = 0;
             int tafelNummer = 0;
 
+            for (int i = 0; i < gastenLijst.size(); i++) {
             while(gastNummer < gastenLijst.size()){
                 ps = ConnectionManager.getConnection().prepareStatement("INSERT tafelgasten SET idtoernooi = ?, idgast = ?, idtafel = ?");
                 ps.setInt(1, idToernooi);
@@ -57,12 +58,37 @@ public class Toernooi {
                 gastNummer++;
                 ps.executeUpdate();
             }
+
+
+            }
         } catch (SQLException exception){
             exception.printStackTrace();
         }
     }
 
-    public static void main(String[] args) {
-        tafelsMaken();
+    public void ratingSysteem(int idToernooi){
+        try{
+            Connection con = ConnectionManager.getConnection();
+            Statement st = con.createStatement();
+            int rating;
+
+        } catch(SQLException exception){exception.printStackTrace();}
     }
-}
+
+    public void prijzenGeldVerdeling(int idToernooi){
+        try{
+            Connection con = ConnectionManager.getConnection();
+            Statement st = con.createStatement();
+            ResultSet rs = st.executeQuery("select (count(idGast) * inleg) from inschrijvingtoernooi I join toernooi T on I.idToernooi = T.idToernooi where I.idToernooi = " + idToernooi);
+            int totaleInleg;
+            Double eerstePrijs;
+            Double tweedePrijs;
+
+        } catch(SQLException exception){exception.printStackTrace();}
+    }
+
+    public static void main(String[] args) {
+
+
+        }
+    }
